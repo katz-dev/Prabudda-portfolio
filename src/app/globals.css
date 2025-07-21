@@ -13,7 +13,7 @@
   --color-card-foreground: oklch(3.9% 0 0);
   --color-popover: oklch(100% 0 0);
   --color-popover-foreground: oklch(3.9% 0 0);
-  --color-primary: oklch(9% 0 0);
+  --color-primary: #27005D;
   --color-primary-foreground: oklch(98% 0 0);
   --color-secondary: oklch(96.1% 0 0);
   --color-secondary-foreground: oklch(9% 0 0);
@@ -31,6 +31,9 @@
   --color-chart-3: oklch(24% 0.37 197);
   --color-chart-4: oklch(66% 0.74 43);
   --color-chart-5: oklch(67% 0.87 27);
+  
+  /* Main brand color */
+  --color-main: #27005D;
   
   --radius: 0.5rem;
   --radius-lg: var(--radius);
@@ -66,8 +69,8 @@ body {
     --color-card-foreground: oklch(98% 0 0);
     --color-popover: oklch(3.9% 0 0);
     --color-popover-foreground: oklch(98% 0 0);
-    --color-primary: oklch(98% 0 0);
-    --color-primary-foreground: oklch(9% 0 0);
+    --color-primary: #27005D;
+    --color-primary-foreground: oklch(98% 0 0);
     --color-secondary: oklch(14.9% 0 0);
     --color-secondary-foreground: oklch(98% 0 0);
     --color-muted: oklch(14.9% 0 0);
