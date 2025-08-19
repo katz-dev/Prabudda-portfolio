@@ -1,0 +1,64 @@
+# Dependencies
+node_modules
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage
+.nyc_output
+
+# Next.js
+.next/
+out/
+build
+
+# Production
+/dist
+
+# Misc
+.DS_Store
+*.tgz
+*.tar.gz
+
+# Debug
+*.log
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel
+.vercel
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+
+# Git
+.git
+.gitignore
+README.md
+
+# CI/CD
+.github
+
+# Scripts (not needed in container)
+scripts/
+
+# Documentation
+DEPLOYMENT.md
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
