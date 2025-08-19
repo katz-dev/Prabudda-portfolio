@@ -10,8 +10,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Nextjs Boilerplate",
-  description: "Nextjs Boilerplate Website",
+  title: "Prabudda - Portfolio Coming Soon",
+  description: "Portfolio website coming soon. Stay tuned for updates!",
 };
 
 export default function RootLayout({
