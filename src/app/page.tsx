@@ -58,7 +58,7 @@ export default function Home() {
         {/* Logo/Name */}
         <div className="mb-8 animate-fade-in">
           <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent mb-4">
-            Prabudda
+            Prabudda DEV
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary/60 mx-auto rounded-full"></div>
         </div>
