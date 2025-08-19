@@ -32,6 +32,12 @@ docker rm -f $CONTAINER_NAME 2>/dev/null || true
 echo "🌐 Cleaning up networks..."
 docker network prune -f 2>/dev/null || true
 
+# Kill any process using port 80
+echo "🔌 Freeing up port 80..."
+sudo fuser -k 80/tcp 2>/dev/null || true
+sudo pkill -f "nginx" 2>/dev/null || true
+sudo pkill -f "apache" 2>/dev/null || true
+
 # Remove old images to free up space
 echo "🧹 Cleaning up old images..."
 docker image prune -f

@@ -1,0 +1,23 @@
+services:
+  prabudda-portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: prabudda-portfolio-alt
+    ports:
+      - "8080:80"  # Alternative port mapping
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - portfolio-network
+
+networks:
+  portfolio-network:
+    driver: bridge
