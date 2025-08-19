@@ -55,30 +55,70 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         port: ${{ secrets.SERVER_PORT || 22 }}
         script: |
+          # Set project directory
+          PROJECT_DIR="/opt/prabudda-portfolio"
+          REPO_URL="https://github.com/${{ github.repository }}.git"
+          
+          echo "🚀 Starting deployment..."
+          
+          # Create project directory if it doesn't exist
+          if [ ! -d "$PROJECT_DIR" ]; then
+            echo "📁 Creating project directory..."
+            sudo mkdir -p "$PROJECT_DIR"
+            sudo chown $USER:$USER "$PROJECT_DIR"
+          fi
+          
           # Navigate to project directory
-          cd /opt/prabudda-portfolio || { echo "Project directory not found"; exit 1; }
+          cd "$PROJECT_DIR"
           
-          # Pull latest changes
-          git pull origin main
+          # Initialize git repository if needed
+          if [ ! -d ".git" ]; then
+            echo "📥 Cloning repository..."
+            git clone "$REPO_URL" .
+          else
+            echo "📥 Pulling latest changes..."
+            git fetch origin
+            git reset --hard origin/main
+          fi
           
-          # Stop existing container
-          docker-compose down || true
+          # Ensure we have the required files
+          if [ ! -f "docker-compose.yml" ]; then
+            echo "❌ docker-compose.yml not found!"
+            exit 1
+          fi
+          
+          if [ ! -f "Dockerfile" ]; then
+            echo "❌ Dockerfile not found!"
+            exit 1
+          fi
+          
+          # Stop existing containers
+          echo "🛑 Stopping existing containers..."
+          docker-compose down 2>/dev/null || true
           
           # Remove old images to save space
+          echo "🧹 Cleaning up old images..."
           docker image prune -f
           
           # Build and start new container
+          echo "🔨 Building and starting containers..."
           docker-compose up -d --build
           
           # Verify deployment
-          sleep 10
+          echo "⏳ Verifying deployment..."
+          sleep 15
+          
           if docker-compose ps | grep -q "Up"; then
             echo "✅ Deployment successful!"
+            echo "📊 Container status:"
+            docker-compose ps
           else
             echo "❌ Deployment failed!"
+            echo "📝 Container logs:"
             docker-compose logs
             exit 1
           fi
           
-          # Clean up old images
+          # Final cleanup
+          echo "🧹 Final cleanup..."
           docker system prune -f

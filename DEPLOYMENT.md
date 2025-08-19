@@ -39,11 +39,8 @@ This guide will help you set up a complete CI/CD pipeline for your Next.js portf
    ./server-setup.sh
    ```
 
-3. **Manual repository clone (after setup script):**
-   ```bash
-   cd /opt/prabudda-portfolio
-   git clone https://github.com/YOUR_USERNAME/Prabudda-portfolio.git .
-   ```
+3. **Repository setup:**
+   The repository will be automatically cloned during the first GitHub Actions deployment. No manual cloning needed!
 
 ### Step 2: Configure GitHub Actions Secrets
 
@@ -79,8 +76,14 @@ Add these secrets:
 
 ## 🔧 Manual Deployment (Alternative)
 
-If you prefer manual deployment:
+If you prefer manual deployment or want to test locally:
 
+**From your development machine:**
+```bash
+./scripts/manual-deploy.sh
+```
+
+**On the server (after first deployment):**
 ```bash
 cd /opt/prabudda-portfolio
 ./scripts/deploy.sh
@@ -234,6 +237,9 @@ sudo journalctl -u prabudda-portfolio -f
 cd /opt/prabudda-portfolio
 git pull origin main
 ./scripts/deploy.sh
+
+# Or use the manual deployment script
+./scripts/manual-deploy.sh
 ```
 
 ### System Maintenance:

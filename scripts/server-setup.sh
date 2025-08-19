@@ -52,11 +52,9 @@ echo "📁 Creating project directory..."
 sudo mkdir -p /opt/prabudda-portfolio
 sudo chown $USER:$USER /opt/prabudda-portfolio
 
-# Clone the repository (you'll need to update this URL)
-echo "📥 Cloning repository..."
-cd /opt/prabudda-portfolio
-# Replace with your actual GitHub repository URL
-# git clone https://github.com/YOUR_USERNAME/Prabudda-portfolio.git .
+# Note: Repository will be cloned automatically during first deployment
+echo "📝 Repository will be cloned during first GitHub Actions deployment"
+echo "   Make sure to push your code after setting up GitHub secrets"
 
 # Set up firewall
 echo "🔥 Setting up firewall..."
