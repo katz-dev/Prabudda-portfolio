@@ -15,7 +15,7 @@ scripts\local-dev.bat
 ```bash
 ./scripts/local-dev.sh
 ```
-
+.
 **Manual:**
 ```bash
 docker-compose up -d --build
