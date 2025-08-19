@@ -46,6 +46,14 @@ git pull origin main
 echo "🛑 Stopping existing containers..."
 docker-compose down 2>/dev/null || true
 
+# Force remove any containers with the same name
+echo "🧹 Removing conflicting containers..."
+docker rm -f prabudda-portfolio 2>/dev/null || true
+
+# Remove conflicting networks
+echo "🌐 Cleaning up networks..."
+docker network prune -f 2>/dev/null || true
+
 # Remove old images to save space
 echo "🧹 Cleaning up old images..."
 docker image prune -f
