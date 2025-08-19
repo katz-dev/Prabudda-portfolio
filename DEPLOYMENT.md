@@ -35,9 +35,15 @@ This guide will help you set up a complete CI/CD pipeline for your Next.js portf
    # Make it executable
    chmod +x server-setup.sh
    
-   # Run the setup script
+   # Run the setup script (includes comprehensive cleanup)
    ./server-setup.sh
    ```
+   
+   **Note**: The setup script now includes comprehensive cleanup that will:
+   - Remove all existing Docker containers and images
+   - Clean up old project directories
+   - Stop conflicting web servers (Apache/Nginx)
+   - Free up disk space by cleaning logs and temporary files
 
 3. **Repository setup:**
    The repository will be automatically cloned during the first GitHub Actions deployment. No manual cloning needed!
@@ -105,8 +111,10 @@ Prabudda-portfolio/
 ├── next.config.ts            # Next.js configuration (static export)
 ├── .github/workflows/deploy.yml  # CI/CD pipeline
 ├── scripts/
-│   ├── server-setup.sh       # VPS setup script
-│   └── deploy.sh            # Manual deployment script
+│   ├── server-setup.sh       # VPS setup script (with cleanup)
+│   ├── deploy.sh            # Manual deployment script
+│   ├── manual-deploy.sh     # Local manual deployment
+│   └── cleanup-server.sh    # Comprehensive server cleanup
 └── DEPLOYMENT.md            # This documentation
 ```
 
@@ -249,6 +257,9 @@ sudo apt update && sudo apt upgrade -y
 
 # Clean Docker system
 docker system prune -a -f
+
+# Comprehensive server cleanup (recommended monthly)
+./scripts/cleanup-server.sh
 
 # Check disk usage
 df -h

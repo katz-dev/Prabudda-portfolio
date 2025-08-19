@@ -7,6 +7,59 @@ set -e
 
 echo "🚀 Setting up Ubuntu server for Prabudda Portfolio deployment..."
 
+# Clean up old installations and free up space
+echo "🧹 Cleaning up old installations and freeing up space..."
+
+# Stop and remove old Docker containers if Docker exists
+if command -v docker &> /dev/null; then
+    echo "🐳 Cleaning up old Docker containers and images..."
+    # Stop all running containers
+    sudo docker stop $(sudo docker ps -aq) 2>/dev/null || true
+    # Remove all containers
+    sudo docker rm $(sudo docker ps -aq) 2>/dev/null || true
+    # Remove all images
+    sudo docker rmi $(sudo docker images -q) 2>/dev/null || true
+    # Remove all volumes
+    sudo docker volume prune -f 2>/dev/null || true
+    # Remove all networks
+    sudo docker network prune -f 2>/dev/null || true
+    # Clean up system
+    sudo docker system prune -a -f 2>/dev/null || true
+fi
+
+# Remove old project directory if it exists
+if [ -d "/opt/prabudda-portfolio" ]; then
+    echo "📁 Removing old project directory..."
+    sudo rm -rf /opt/prabudda-portfolio
+fi
+
+# Clean up package cache and unnecessary packages
+echo "🧹 Cleaning up system packages..."
+sudo apt autoremove -y
+sudo apt autoclean
+sudo apt clean
+
+# Clean up logs
+echo "📝 Cleaning up old logs..."
+sudo journalctl --vacuum-time=7d 2>/dev/null || true
+sudo find /var/log -name "*.log" -type f -mtime +7 -delete 2>/dev/null || true
+
+# Clean up temporary files
+echo "🗑️ Cleaning up temporary files..."
+sudo rm -rf /tmp/*
+sudo rm -rf /var/tmp/*
+
+# Stop and disable conflicting services
+echo "🛑 Stopping conflicting web servers..."
+# Stop Apache if running
+sudo systemctl stop apache2 2>/dev/null || true
+sudo systemctl disable apache2 2>/dev/null || true
+# Stop Nginx if running (we'll use our own in Docker)
+sudo systemctl stop nginx 2>/dev/null || true
+sudo systemctl disable nginx 2>/dev/null || true
+# Stop any other services using port 80
+sudo fuser -k 80/tcp 2>/dev/null || true
+
 # Update system packages
 echo "📦 Updating system packages..."
 sudo apt update && sudo apt upgrade -y
@@ -111,6 +164,16 @@ EOF
 
 sudo systemctl daemon-reload
 sudo systemctl enable prabudda-portfolio.service
+
+# Final cleanup and disk space check
+echo "🧹 Final cleanup..."
+sudo apt autoremove -y
+sudo apt autoclean
+sudo docker system prune -f 2>/dev/null || true
+
+# Check available disk space
+echo "💾 Disk space status:"
+df -h / | grep -E "(Filesystem|/dev/)"
 
 echo "✅ Server setup completed successfully!"
 echo ""
