@@ -69,7 +69,7 @@ export default function Home() {
             Something Amazing is Coming Soon
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            I'm crafting a beautiful portfolio experience to showcase my work and journey. 
+            I&apos;m crafting a beautiful portfolio experience to showcase my work and journey. 
             Stay tuned for the grand reveal!
           </p>
         </div>
@@ -82,7 +82,7 @@ export default function Home() {
               { label: 'Hours', value: timeLeft.hours },
               { label: 'Minutes', value: timeLeft.minutes },
               { label: 'Seconds', value: timeLeft.seconds }
-            ].map((item, index) => (
+            ].map((item) => (
               <div key={item.label} className="bg-card border border-border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <div className="text-2xl md:text-3xl font-bold text-primary mb-1">
                   {item.value.toString().padStart(2, '0')}
