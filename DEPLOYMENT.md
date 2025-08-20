@@ -99,6 +99,7 @@ cd /opt/prabudda-portfolio
 
 - **HTTP**: `http://YOUR_VPS_IP`
 - **With Domain**: Point your domain's A record to your VPS IP
+- **With SSL**: See [Cloudflare SSL Setup Guide](CLOUDFLARE-SSL-SETUP.md) for HTTPS configuration
 
 ## 📁 Project Structure
 
@@ -114,8 +115,13 @@ Prabudda-portfolio/
 │   ├── server-setup.sh       # VPS setup script (with cleanup)
 │   ├── deploy.sh            # Manual deployment script
 │   ├── manual-deploy.sh     # Local manual deployment
+│   ├── ssl-setup.sh         # SSL certificate setup script
+│   ├── cloudflare-setup.sh  # Cloudflare configuration helper
 │   └── cleanup-server.sh    # Comprehensive server cleanup
-└── DEPLOYMENT.md            # This documentation
+├── DEPLOYMENT.md            # This documentation
+├── CLOUDFLARE-SSL-SETUP.md  # Cloudflare & SSL setup guide
+├── default-ssl-template.conf # SSL-enabled Nginx configuration
+└── docker-compose-ssl.yml   # Docker Compose with SSL support
 ```
 
 ## 🐳 Docker Configuration
@@ -233,6 +239,22 @@ sudo journalctl -u prabudda-portfolio -f
 - Static file caching (1 year)
 - Multi-stage Docker build for smaller images
 - Image pruning in CI/CD pipeline
+
+## 🔒 SSL & Domain Setup
+
+For setting up your domain with Cloudflare and SSL certificate:
+
+1. **Quick Setup:**
+   ```bash
+   # Check DNS configuration
+   ./scripts/cloudflare-setup.sh your-domain.com
+   
+   # Set up SSL certificate
+   sudo ./scripts/ssl-setup.sh your-domain.com
+   ```
+
+2. **Detailed Guide:**
+   See [CLOUDFLARE-SSL-SETUP.md](CLOUDFLARE-SSL-SETUP.md) for complete instructions.
 
 ## 🔄 Updates and Maintenance
 
