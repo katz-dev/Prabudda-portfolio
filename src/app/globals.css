@@ -61,8 +61,8 @@ body {
     @apply bg-background text-foreground font-[var(--font-poppins)];
   }
 
-  /* Dark mode color overrides */
-  [data-theme="dark"] {
+  /* Dark mode support */
+  html.dark {
     --color-background: oklch(3.9% 0 0);
     --color-foreground: oklch(98% 0 0);
     --color-card: oklch(3.9% 0 0);

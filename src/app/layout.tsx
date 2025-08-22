@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.variable} font-sans antialiased`}>
         <ThemeProvider
-          attribute="data-theme"
+          attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange

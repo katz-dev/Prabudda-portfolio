@@ -4,31 +4,59 @@ import { useState, useEffect, useRef } from "react";
 import {
   Github,
   Linkedin,
-  Twitter,
   Mail,
-  Target,
-  FileText,
-  Bot,
-  BarChart3,
-  PartyPopper
+  ExternalLink,
+  MapPin,
+  Phone,
+  GraduationCap,
+  Briefcase,
+  Code,
+  Database,
+  Globe,
+  ChevronRight,
+  Star,
+  Award,
+  Users,
+  Coffee,
+  Zap,
+  Calendar,
+  TrendingUp,
+  BookOpen,
+  Send,
+  CheckCircle
 } from "lucide-react";
 
 export default function Home() {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-
   const [mounted, setMounted] = useState(false);
-  const [email, setEmail] = useState("");
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [isSubscribing, setIsSubscribing] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  const [counters, setCounters] = useState({
+    yearsExperience: 0,
+    projectsCompleted: 0,
+    technologies: 0,
+    cupsOfCoffee: 0
+  });
+  const [contactForm, setContactForm] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [typedText, setTypedText] = useState('');
+  const [isTyping, setIsTyping] = useState(true);
+  const [skillProgress, setSkillProgress] = useState({
+    frontend: 0,
+    backend: 0,
+    databases: 0,
+    other: 0
+  });
+  const [scrollProgress, setScrollProgress] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const skillsRef = useRef<HTMLDivElement>(null);
 
   // Mouse tracking for interactive effects
   useEffect(() => {
@@ -38,6 +66,18 @@ export default function Home() {
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Scroll progress tracking
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+      setScrollProgress(Math.min(progress, 100));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Particle animation with canvas
@@ -58,17 +98,21 @@ export default function Home() {
     window.addEventListener('resize', resizeCanvas);
 
     // Create particles
-    const particleCount = 50;
+    const particleCount = 60;
     const canvasParticles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      size: Math.random() * 2 + 1,
+      size: Math.random() * 3 + 0.5,
       speedX: Math.random() * 0.5 - 0.25,
       speedY: Math.random() * 0.5 - 0.25,
-      opacity: Math.random() * 0.5 + 0.2
+      opacity: Math.random() * 0.6 + 0.2,
+      color: Math.random() > 0.5 ? 'hsl(var(--primary) / 0.3)' : 'hsl(220, 100%, 70% / 0.3)',
+      pulse: Math.random() * 0.02 + 0.01
     }));
 
+    let time = 0;
     const animate = () => {
+      time += 0.01;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       canvasParticles.forEach(particle => {
@@ -76,16 +120,34 @@ export default function Home() {
         particle.x += particle.speedX;
         particle.y += particle.speedY;
 
+        // Mouse interaction
+        const dx = mousePosition.x - particle.x;
+        const dy = mousePosition.y - particle.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 100) {
+          particle.x -= dx * 0.02;
+          particle.y -= dy * 0.02;
+        }
+
         // Bounce off edges
         if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
         if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
 
+        // Pulsing effect
+        const pulse = Math.sin(time * particle.pulse) * 0.5 + 0.5;
+        const currentOpacity = particle.opacity * (0.5 + pulse * 0.5);
+
         // Draw particle
         ctx.save();
-        ctx.globalAlpha = particle.opacity;
-        ctx.fillStyle = 'hsl(var(--primary) / 0.3)';
+        ctx.globalAlpha = currentOpacity;
+        ctx.fillStyle = particle.color;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Add glow effect
+        ctx.shadowColor = particle.color;
+        ctx.shadowBlur = particle.size * 2;
         ctx.fill();
         ctx.restore();
       });
@@ -98,33 +160,151 @@ export default function Home() {
     return () => {
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, []);
+  }, [mousePosition.x, mousePosition.y]);
 
 
 
   useEffect(() => {
     setMounted(true);
-
-    // Set target date (you can change this to your desired launch date)
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 30); // 30 days from now
-
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = targetDate.getTime() - now;
-
-      if (distance > 0) {
-        setTimeLeft({
-          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((distance % (1000 * 60)) / 1000)
-        });
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
   }, []);
+
+  // Typing animation
+  useEffect(() => {
+    const text = "Full Stack Developer";
+    let index = 0;
+    let timeoutId: NodeJS.Timeout;
+
+    const type = () => {
+      if (index < text.length) {
+        setTypedText(text.slice(0, index + 1));
+        index++;
+        timeoutId = setTimeout(type, 100);
+      } else {
+        setIsTyping(false);
+      }
+    };
+
+    if (isVisible) {
+      setTimeout(() => type(), 1000);
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [isVisible]);
+
+  // Counter animation
+  useEffect(() => {
+    const targetCounters = {
+      yearsExperience: 1,
+      projectsCompleted: 2,
+      technologies: 12,
+      cupsOfCoffee: 365
+    };
+
+    const animateCounters = () => {
+      const duration = 2000;
+      const startTime = Date.now();
+
+      const updateCounters = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        setCounters({
+          yearsExperience: Math.floor(targetCounters.yearsExperience * progress),
+          projectsCompleted: Math.floor(targetCounters.projectsCompleted * progress),
+          technologies: Math.floor(targetCounters.technologies * progress),
+          cupsOfCoffee: Math.floor(targetCounters.cupsOfCoffee * progress)
+        });
+
+        if (progress < 1) {
+          requestAnimationFrame(updateCounters);
+        }
+      };
+
+      updateCounters();
+    };
+
+    if (statsRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateCounters();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      observer.observe(statsRef.current);
+      return () => observer.disconnect();
+    }
+  }, [counters]);
+
+  // Skill progress animation
+  useEffect(() => {
+    if (skillsRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const animateSkills = () => {
+                const duration = 2000;
+                const startTime = Date.now();
+
+                const updateProgress = () => {
+                  const elapsed = Date.now() - startTime;
+                  const currentProgress = Math.min(elapsed / duration, 1);
+
+                  setSkillProgress({
+                    frontend: Math.floor(95 * currentProgress),
+                    backend: Math.floor(90 * currentProgress),
+                    databases: Math.floor(85 * currentProgress),
+                    other: Math.floor(90 * currentProgress)
+                  });
+
+                  if (currentProgress < 1) {
+                    requestAnimationFrame(updateProgress);
+                  }
+                };
+
+                updateProgress();
+              };
+
+              animateSkills();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      observer.observe(skillsRef.current);
+      return () => observer.disconnect();
+    }
+  }, []);
+
+  // Contact form handlers
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitted(true);
+      setIsSubmitting(false);
+      setContactForm({ name: '', email: '', subject: '', message: '' });
+
+      setTimeout(() => setIsSubmitted(false), 3000);
+    }, 2000);
+  };
+
+  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setContactForm(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
 
 
 
@@ -133,71 +313,192 @@ export default function Home() {
     setIsVisible(true);
   }, []);
 
-  // Email validation function
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  // Portfolio data
+  const personalInfo = {
+    name: "Prabudda Perera",
+    title: "Full Stack Developer",
+    email: "prabudda30@outlook.com",
+    phone: "+94 761211546",
+    location: "Sri Lanka",
+    linkedin: "https://www.linkedin.com/in/prabudda-perera/",
+    github: "https://github.com/katz-dev",
+    portfolio: "https://github.com/katz-dev"
   };
 
-  // Handle email subscription
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateEmail(email)) {
-      alert("Please enter a valid email address");
-      return;
+  const summary = "I am a dedicated Full-Stack Developer with over a year of experience, including significant work in developing and administering FiveM servers. I possess a strong foundation in MERN stack technologies (MongoDB, Express.js, React, Node.js), particularly JavaScript, and extensive experience with frameworks like NestJS for robust backend development and Next.js for modern, high-performance frontends. I have a solid understanding of database systems like MySQL and MongoDB. My knowledge of Lua programming further enhances my ability to create immersive gaming experiences. I am passionate about crafting innovative solutions and delivering high-quality work.";
+
+  const education = {
+    degree: "BSc (Hons) Computer Security",
+    institution: "Plymouth University",
+    location: "Homagama, Sri Lanka",
+    period: "2021 - Present"
+  };
+
+  const experience = [
+    {
+      title: "Full Stack Developer",
+      company: "Fiver",
+      location: "Remote",
+      period: "January 2021 - Present",
+      description: [
+        "Developed full-stack applications using Next.js (frontend) and NestJS (backend), leveraging MongoDB for data management",
+        "Designed and implemented robust RESTful APIs to power application features",
+        "Contributed to the design and maintenance of CI/CD pipelines for automated testing and deployment",
+        "Collaborated with teams and utilized Git for efficient project delivery"
+      ]
+    },
+    {
+      title: "FiveM Game Developer",
+      company: "Fiver",
+      location: "Remote",
+      period: "2021 - Present",
+      description: [
+        "Developed and administered immersive FiveM experiences utilizing frameworks such as QBCore, QBOX, ESX, and Standalone",
+        "Proficient in Lua, HTML, JavaScript, TypeScript, and MySQL for full-stack FiveM development",
+        "Collaborated with teams and leveraged Git for version control to deliver project milestones"
+      ]
     }
+  ];
 
-    setIsSubscribing(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubscribed(true);
-      setIsSubscribing(false);
-      setEmail("");
-    }, 1500);
+  const projects = [
+    {
+      title: "Fortisafe",
+      description: "A comprehensive cybersecurity platform that addresses modern digital security challenges through an integrated three-tier architecture",
+      technologies: ["Next.js", "NestJS", "JavaScript", "MongoDB"],
+      github: "https://github.com/katz-dev/fortisafe",
+      features: [
+        "Browser Extension: Real-time protection and password management",
+        "Web Application: Comprehensive password management dashboard",
+        "Backend API: Secure authentication, password storage, and security scanning"
+      ]
+    },
+    {
+      title: "Online-Library-Book-Store-Book-Boulevard",
+      description: "A dynamic platform designed for avid readers and aspiring authors to discover books and share literary creations",
+      technologies: ["MongoDB", "React.js", "Node.js"],
+      github: "https://github.com/katz-dev/Online-Library-Book-Store-Book-Boulevard",
+      features: [
+        "Book discovery and search functionality",
+        "Author platform for sharing literary works",
+        "User-friendly interface for reading and purchasing"
+      ]
+    }
+  ];
+
+  const skills = {
+    frontend: [
+      { name: "HTML", level: 95 },
+      { name: "CSS", level: 90 },
+      { name: "JavaScript", level: 88 },
+      { name: "React", level: 92 },
+      { name: "Next.js", level: 85 }
+    ],
+    backend: [
+      { name: "Node.js", level: 90 },
+      { name: "Express", level: 88 },
+      { name: "NestJS", level: 82 }
+    ],
+    databases: [
+      { name: "MongoDB", level: 85 },
+      { name: "MySQL", level: 80 },
+      { name: "Firebase", level: 75 }
+    ],
+    other: [
+      { name: "Git", level: 90 },
+      { name: "Lua", level: 80 }
+    ]
   };
 
-  // Social media links with lucide icons
+  const services = [
+    {
+      icon: Code,
+      title: "Full-Stack Development",
+      description: "End-to-end web application development using modern MERN stack technologies",
+      features: ["Custom Web Applications", "API Development", "Database Design", "Performance Optimization"]
+    },
+    {
+      icon: Globe,
+      title: "FiveM Game Development",
+      description: "Immersive gaming experiences using FiveM framework with Lua scripting",
+      features: ["Custom Game Modes", "Server Administration", "Multiplayer Features", "Performance Tuning"]
+    },
+    {
+      icon: Database,
+      title: "Database Architecture",
+      description: "Robust database design and management for scalable applications",
+      features: ["Schema Design", "Data Migration", "Query Optimization", "Security Implementation"]
+    },
+    {
+      icon: Zap,
+      title: "Performance Optimization",
+      description: "Enhancing application speed and user experience through optimization techniques",
+      features: ["Code Optimization", "Load Balancing", "Caching Strategies", "Monitoring"]
+    }
+  ];
+
+  const achievements = [
+    {
+      icon: Award,
+      title: "Completed Multiple Full-Stack Projects",
+      description: "Successfully delivered end-to-end web applications using modern technologies",
+      date: "2023-2024"
+    },
+    {
+      icon: Users,
+      title: "FiveM Server Administration",
+      description: "Managed and optimized FiveM gaming servers for enhanced player experience",
+      date: "2021-2024"
+    },
+    {
+      icon: BookOpen,
+      title: "Computer Security Degree",
+      description: "Graduated with BSc (Hons) in Computer Security from Plymouth University",
+      date: "2021-2024"
+    },
+    {
+      icon: TrendingUp,
+      title: "Continuous Learning",
+      description: "Regularly updating skills with latest technologies and frameworks",
+      date: "Ongoing"
+    }
+  ];
+
+  const stats = [
+    {
+      icon: Calendar,
+      value: counters.yearsExperience,
+      label: "Years Experience",
+      suffix: "+",
+      color: "from-blue-500 to-cyan-500"
+    },
+    {
+      icon: Code,
+      value: counters.projectsCompleted,
+      label: "Projects Completed",
+      suffix: "+",
+      color: "from-emerald-500 to-teal-500"
+    },
+    {
+      icon: Zap,
+      value: counters.technologies,
+      label: "Technologies",
+      suffix: "+",
+      color: "from-purple-500 to-pink-500"
+    },
+    {
+      icon: Coffee,
+      value: counters.cupsOfCoffee,
+      label: "Cups of Coffee",
+      suffix: "+",
+      color: "from-amber-500 to-orange-500"
+    }
+  ];
+
+  // Social media links
   const socialLinks = [
-    { name: 'GitHub', icon: Github, url: 'https://github.com/prabudda', color: 'hover:text-gray-300' },
-    { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/prabudda', color: 'hover:text-blue-400' },
-    { name: 'Twitter', icon: Twitter, url: 'https://twitter.com/prabudda', color: 'hover:text-blue-300' },
-    { name: 'Email', icon: Mail, url: 'mailto:prabudda@example.com', color: 'hover:text-red-400' }
-  ];
-
-  // Development milestones
-  const milestones = [
-    { title: 'Design System', progress: 85, status: 'completed', color: 'from-emerald-500 to-teal-600' },
-    { title: 'Core Development', progress: 70, status: 'in-progress', color: 'from-blue-500 to-indigo-600' },
-    { title: 'Content Creation', progress: 60, status: 'in-progress', color: 'from-purple-500 to-pink-600' },
-    { title: 'Testing & Polish', progress: 40, status: 'upcoming', color: 'from-orange-500 to-red-600' }
-  ];
-
-  // Upcoming features with lucide icons
-  const upcomingFeatures = [
-    {
-      title: 'Interactive Portfolio',
-      description: 'Dynamic project showcases with live previews and interactive demos',
-      icon: Target,
-      category: 'Core Features'
-    },
-    {
-      title: 'Tech Blog Platform',
-      description: 'In-depth articles about development, tutorials, and industry insights',
-      icon: FileText,
-      category: 'Content'
-    },
-    {
-      title: 'AI-Powered Contact',
-      description: 'Smart contact forms with instant responses and project inquiries',
-      icon: Bot,
-      category: 'Automation'
-    },
-    {
-      title: 'Performance Dashboard',
-      description: 'Real-time analytics and insights into portfolio performance',
-      icon: BarChart3,
-      category: 'Analytics'
-    }
+    { name: 'GitHub', icon: Github, url: personalInfo.github, color: 'hover:text-gray-300' },
+    { name: 'LinkedIn', icon: Linkedin, url: personalInfo.linkedin, color: 'hover:text-blue-400' },
+    { name: 'Email', icon: Mail, url: `mailto:${personalInfo.email}`, color: 'hover:text-red-400' }
   ];
 
   if (!mounted) {
@@ -236,214 +537,82 @@ export default function Home() {
         />
       </div>
 
-      {/* Theme Toggle */}
-      <div className="absolute top-6 right-6 z-50">
-        <ThemeToggle />
+            {/* Enhanced Theme Toggle */}
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50">
+        <div className="relative group">
+          <ThemeToggle />
+          <div className="absolute right-full mr-2 sm:mr-3 top-1/2 -translate-y-1/2 bg-slate-900/90 text-white px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-xs sm:text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            Toggle Theme
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll Progress Indicator */}
+      <div className="fixed top-0 left-0 w-full h-1 bg-slate-800/50 z-50">
+        <div
+          className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 transition-all duration-300 ease-out"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
+      {/* Floating Action Button */}
+      <div className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50">
+        <div className="relative group">
+          <a
+            href={`mailto:${personalInfo.email}`}
+            className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-110 group-hover:animate-pulse"
+            title="Quick Contact"
+          >
+            <Send className="w-5 h-5 sm:w-6 sm:h-6" />
+          </a>
+          <div className="absolute right-14 sm:right-16 top-1/2 -translate-y-1/2 bg-slate-900/90 text-white px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-xs sm:text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            Quick Contact
+          </div>
+        </div>
       </div>
 
       {/* Main Container */}
       <div className="relative z-10">
         {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center px-6">
-          <div className="text-center max-w-6xl mx-auto">
-            {/* Logo/Brand */}
-            <div
-              className={`transition-all duration-1000 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
-            >
-              <div className="inline-block mb-8">
-                <h1 className="text-6xl md:text-9xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-emerald-400 bg-clip-text text-transparent mb-4 tracking-tight">
-                  PRABUDDA
-                </h1>
-                <div className="h-1 w-full bg-gradient-to-r from-blue-400 to-emerald-400 rounded-full"></div>
-              </div>
-              <p className="text-xl md:text-2xl text-slate-300 mb-6 font-light">Full-Stack Developer & Designer</p>
+        <section className="min-h-screen flex items-center justify-center px-4 sm:px-6">
+          <div className="text-center max-w-6xl mx-auto w-full">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-emerald-400 bg-clip-text text-transparent mb-4 tracking-tight">
+              {personalInfo.name}
+            </h1>
+            <div className="h-1 w-16 sm:w-20 md:w-24 mx-auto bg-gradient-to-r from-blue-400 to-emerald-400 rounded-full mb-6"></div>
+            <div className="text-lg sm:text-xl md:text-2xl text-slate-300 mb-6 font-light min-h-[2rem]">
+              {typedText}
+              {isTyping && <span className="animate-pulse text-emerald-400">|</span>}
             </div>
 
-            {/* Main CTA */}
+            {/* Contact Info */}
             <div
               className={`transition-all duration-1000 delay-300 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                Crafting Digital
-                <span className="block bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent mt-2">
-                  Experiences
-                </span>
-              </h2>
-              <p className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-                I&apos;m building something extraordinary. A portfolio that doesn&apos;t just showcase projects,
-                but tells the story of innovation, creativity, and technical excellence.
-              </p>
+              <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-4 sm:gap-6 mb-8 text-slate-400">
+                <div className="flex items-center gap-2 justify-center sm:justify-start">
+                  <Mail className="w-4 h-4 flex-shrink-0" />
+                  <span className="text-sm sm:text-base break-all sm:break-normal">{personalInfo.email}</span>
+              </div>
+                <div className="flex items-center gap-2 justify-center sm:justify-start">
+                  <Phone className="w-4 h-4 flex-shrink-0" />
+                  <span className="text-sm sm:text-base">{personalInfo.phone}</span>
+                </div>
+                <div className="flex items-center gap-2 justify-center sm:justify-start">
+                  <MapPin className="w-4 h-4 flex-shrink-0" />
+                  <span className="text-sm sm:text-base">{personalInfo.location}</span>
+                </div>
+              </div>
             </div>
 
-            {/* Launch Date Badge */}
+            {/* Social Links */}
             <div
-              className={`inline-flex items-center gap-3 px-6 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-full transition-all duration-1000 delay-500 ${
+              className={`flex justify-center gap-4 sm:gap-6 transition-all duration-1000 delay-500 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
-              <span className="text-slate-300 font-medium">Launching Soon</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Countdown Section */}
-        <section className="py-20 px-6">
-          <div className="max-w-4xl mx-auto">
-            <h3 className="text-2xl md:text-3xl font-bold text-white text-center mb-12">
-              The Journey Begins In
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { label: 'Days', value: timeLeft.days },
-                { label: 'Hours', value: timeLeft.hours },
-                { label: 'Minutes', value: timeLeft.minutes },
-                { label: 'Seconds', value: timeLeft.seconds }
-              ].map((item, index) => (
-                <div
-                  key={item.label}
-                  className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/30 rounded-2xl p-6 text-center hover:bg-slate-800/40 transition-all duration-300 hover:scale-105"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-b from-white to-slate-300 bg-clip-text text-transparent mb-2">
-                    {item.value.toString().padStart(2, '0')}
-                  </div>
-                  <div className="text-sm text-slate-400 uppercase tracking-wider font-medium">
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Milestones Section */}
-        <section className="py-20 px-6 bg-slate-900/20">
-          <div className="max-w-6xl mx-auto">
-            <h3 className="text-3xl md:text-4xl font-bold text-white text-center mb-16">
-              Development Progress
-            </h3>
-            <div className="grid gap-8 md:gap-6">
-              {milestones.map((milestone, index) => (
-                <div
-                  key={milestone.title}
-                  className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-2xl p-8 hover:bg-slate-800/30 transition-all duration-300 hover:scale-[1.02]"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="flex flex-col md:flex-row md:items-center gap-6">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className={`w-4 h-4 rounded-full ${
-                          milestone.status === 'completed'
-                            ? 'bg-emerald-500'
-                            : milestone.status === 'in-progress'
-                            ? 'bg-blue-500 animate-pulse'
-                            : 'bg-slate-500'
-                        }`}></div>
-                        <h4 className="text-xl font-semibold text-white">{milestone.title}</h4>
-                        <span className="ml-auto text-sm text-slate-400">{milestone.progress}%</span>
-                      </div>
-                      <div className="w-full bg-slate-700/50 rounded-full h-3">
-                        <div
-                          className={`h-3 bg-gradient-to-r ${milestone.color} rounded-full transition-all duration-2000 ease-out`}
-                          style={{ width: `${milestone.progress}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Features Preview */}
-        <section className="py-20 px-6">
-          <div className="max-w-6xl mx-auto">
-            <h3 className="text-3xl md:text-4xl font-bold text-white text-center mb-16">
-              What&apos;s Coming
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {upcomingFeatures.map((feature, index) => {
-                const IconComponent = feature.icon;
-                return (
-                  <div
-                    key={feature.title}
-                    className="group bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-3xl p-8 hover:bg-slate-800/30 hover:border-slate-600/50 transition-all duration-300 hover:scale-105 cursor-pointer"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <div className="flex items-start gap-6">
-                      <div className="group-hover:scale-110 transition-transform duration-300">
-                        <IconComponent className="w-10 h-10 text-blue-400" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">
-                          {feature.title}
-                        </h4>
-                        <p className="text-slate-400 mb-3 leading-relaxed">
-                          {feature.description}
-                        </p>
-                        <span className="inline-flex items-center px-3 py-1 bg-slate-700/50 text-slate-300 text-sm rounded-full">
-                          {feature.category}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* Newsletter Signup */}
-        <section className="py-20 px-6 bg-gradient-to-r from-blue-900/20 to-purple-900/20">
-          <div className="max-w-2xl mx-auto text-center">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Stay in the Loop
-            </h3>
-            <p className="text-lg text-slate-400 mb-12">
-              Be the first to know when the portfolio launches and get exclusive behind-the-scenes content.
-            </p>
-
-            {isSubscribed ? (
-              <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-2xl p-8 animate-fade-in">
-                <div className="flex justify-center mb-4">
-                  <PartyPopper className="w-16 h-16 text-emerald-400" />
-                </div>
-                <h4 className="text-xl font-semibold text-white mb-2">Welcome aboard!</h4>
-                <p className="text-slate-300">You&apos;ll be notified as soon as everything is ready.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
-                  className="flex-1 px-6 py-4 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                  required
-                />
-                <button
-                  type="submit"
-                  disabled={isSubscribing}
-                  className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
-                >
-                  {isSubscribing ? 'Subscribing...' : 'Notify Me'}
-                </button>
-              </form>
-            )}
-          </div>
-        </section>
-
-        {/* Social Links */}
-        <section className="py-20 px-6">
-          <div className="max-w-2xl mx-auto text-center">
-            <h3 className="text-2xl font-bold text-white mb-8">Follow the Journey</h3>
-            <div className="flex justify-center gap-6">
               {socialLinks.map((social) => {
                 const IconComponent = social.icon;
                 return (
@@ -452,13 +621,628 @@ export default function Home() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-14 h-14 bg-slate-800/50 border border-slate-700/50 rounded-xl flex items-center justify-center text-slate-400 hover:text-white ${social.color} hover:bg-slate-700/50 hover:border-slate-600/50 transition-all duration-300 hover:scale-110 group`}
+                    className={`w-10 h-10 sm:w-12 sm:h-12 bg-slate-800/50 border border-slate-700/50 rounded-xl flex items-center justify-center text-slate-400 hover:text-white ${social.color} hover:bg-slate-700/50 hover:border-slate-600/50 transition-all duration-300 hover:scale-110 group`}
                     title={social.name}
                   >
-                    <IconComponent className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+                    <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300" />
                   </a>
                 );
               })}
+            </div>
+          </div>
+        </section>
+
+                {/* Statistics Section */}
+        <section ref={statsRef} className="py-12 sm:py-20 px-4 sm:px-6 bg-slate-900/20">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-8 sm:mb-12">
+              By The Numbers
+            </h2>
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+              {stats.map((stat, index) => {
+                const IconComponent = stat.icon;
+                return (
+                  <div
+                    key={index}
+                    className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 text-center hover:bg-slate-800/30 transition-all duration-300 hover:scale-105 hover:border-slate-600/50"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className="p-3 sm:p-4 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 w-fit mx-auto">
+                      <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-slate-300" />
+                    </div>
+                    <div className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
+                      {stat.value.toLocaleString()}{stat.suffix}
+                    </div>
+                    <div className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider font-medium">
+                      {stat.label}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* About/Summary Section */}
+        <section className="py-20 px-6 bg-slate-900/20">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">
+              About Me
+            </h2>
+            <div className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-3xl p-8">
+              <p className="text-lg text-slate-300 leading-relaxed">
+                {summary}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Education Section */}
+        <section className="py-20 px-6">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">
+              Education
+            </h2>
+            <div className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-3xl p-8 hover:bg-slate-800/30 transition-all duration-300">
+              <div className="flex items-start gap-6">
+                <div className="p-3 bg-blue-500/20 rounded-xl">
+                  <GraduationCap className="w-8 h-8 text-blue-400" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-white mb-2">{education.degree}</h3>
+                  <p className="text-lg text-blue-400 mb-2">{education.institution}</p>
+                  <div className="flex items-center gap-4 text-slate-400">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-4 h-4" />
+                      {education.location}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Globe className="w-4 h-4" />
+                      {education.period}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Experience Timeline Section */}
+        <section className="py-12 sm:py-20 px-4 sm:px-6 bg-slate-900/20">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-4">
+              Career Journey
+            </h2>
+            <p className="text-base sm:text-lg text-slate-400 text-center mb-12 sm:mb-16 max-w-3xl mx-auto px-4">
+              My professional path in full-stack development and gaming technology
+            </p>
+
+            <div className="relative">
+              {/* Timeline Line - Hidden on mobile, visible on larger screens */}
+              <div className="hidden sm:block absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-emerald-500"></div>
+
+              <div className="space-y-8 sm:space-y-12">
+                {experience.map((exp, index) => (
+                  <div
+                    key={index}
+                    className="relative flex items-start gap-4 sm:gap-8"
+                    style={{ animationDelay: `${index * 0.2}s` }}
+                  >
+                    {/* Timeline Node */}
+                    <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-slate-800 to-slate-900 border-4 border-slate-700 rounded-full flex items-center justify-center z-10">
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full animate-pulse"></div>
+                    </div>
+
+                    {/* Experience Card */}
+                    <div className="flex-1 max-w-2xl">
+                      <div className="group bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 hover:bg-slate-800/30 hover:border-slate-600/50 transition-all duration-300 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10">
+                        <div className="flex items-start gap-3 sm:gap-4">
+                          <div className="p-2 sm:p-3 bg-emerald-500/20 rounded-lg sm:rounded-xl group-hover:scale-110 transition-transform duration-300">
+                            <Briefcase className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-emerald-400" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4">
+                              <div>
+                                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1 sm:mb-2 group-hover:text-emerald-400 transition-colors duration-300">
+                                  {exp.title}
+            </h3>
+                                <p className="text-base sm:text-lg text-emerald-400 mb-2">{exp.company}</p>
+                              </div>
+                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-slate-400">
+                                <span className="flex items-center gap-1">
+                                  <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
+                                  <span className="text-sm">{exp.location}</span>
+                                </span>
+                                <span className="text-xs sm:text-sm bg-slate-700/50 px-2 py-1 sm:px-3 sm:py-1 rounded-full">
+                                  {exp.period}
+                                </span>
+                              </div>
+                            </div>
+                            <ul className="space-y-2 sm:space-y-3">
+                              {exp.description.map((item, idx) => (
+                                <li key={idx} className="flex items-start gap-2 sm:gap-3 text-slate-300">
+                                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                                  <span className="text-sm sm:text-base">{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section className="py-20 px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">
+              Featured Projects
+            </h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {projects.map((project, index) => (
+                <div
+                  key={index}
+                  className="group bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-3xl p-8 hover:bg-slate-800/30 hover:border-slate-600/50 transition-all duration-300 hover:scale-105"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="p-3 bg-purple-500/20 rounded-xl">
+                      <Code className="w-8 h-8 text-purple-400" />
+                  </div>
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-slate-700/50 rounded-lg hover:bg-slate-600/50 transition-colors duration-300 group-hover:scale-110"
+                    >
+                      <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-white" />
+                    </a>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-purple-400 transition-colors duration-300">
+                    {project.title}
+                  </h3>
+                  <p className="text-slate-300 mb-6 leading-relaxed">
+                    {project.description}
+                  </p>
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Technologies</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((tech, idx) => (
+                        <span key={idx} className="px-3 py-1 bg-slate-700/50 text-slate-300 text-sm rounded-full">
+                          {tech}
+                        </span>
+                      ))}
+                </div>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Key Features</h4>
+                    <ul className="space-y-2">
+                      {project.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-center gap-2 text-slate-300 text-sm">
+                          <Star className="w-4 h-4 text-yellow-400" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section ref={skillsRef} className="py-12 sm:py-20 px-4 sm:px-6 bg-slate-900/20">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-4">
+              Skills & Technologies
+            </h2>
+            <p className="text-base sm:text-lg text-slate-400 text-center mb-12 sm:mb-16 max-w-3xl mx-auto px-4">
+              My technical expertise and proficiency levels in various technologies
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
+              {/* Frontend Skills */}
+              <div className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-6 sm:mb-8">
+                  <div className="p-2 sm:p-3 bg-blue-500/20 rounded-lg sm:rounded-xl">
+                    <Code className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white">Frontend Development</h3>
+                    <p className="text-slate-400 text-xs sm:text-sm">{skillProgress.frontend}% Proficiency</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 sm:space-y-6">
+                  {skills.frontend.map((skill, index) => (
+                    <div key={index} className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-300 font-medium text-sm sm:text-base">{skill.name}</span>
+                        <span className="text-slate-400 text-xs sm:text-sm">{skill.level}%</span>
+                      </div>
+                      <div className="w-full bg-slate-700/50 rounded-full h-2 sm:h-3 overflow-hidden">
+                        <div
+                          className="h-2 sm:h-3 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-1000 ease-out"
+                          style={{
+                            width: `${Math.min(skill.level * (skillProgress.frontend / 95), skill.level)}%`
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Backend Skills */}
+              <div className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-6 sm:mb-8">
+                  <div className="p-2 sm:p-3 bg-green-500/20 rounded-lg sm:rounded-xl">
+                    <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white">Backend Development</h3>
+                    <p className="text-slate-400 text-xs sm:text-sm">{skillProgress.backend}% Proficiency</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 sm:space-y-6">
+                  {skills.backend.map((skill, index) => (
+                    <div key={index} className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-300 font-medium text-sm sm:text-base">{skill.name}</span>
+                        <span className="text-slate-400 text-xs sm:text-sm">{skill.level}%</span>
+                      </div>
+                      <div className="w-full bg-slate-700/50 rounded-full h-2 sm:h-3 overflow-hidden">
+                        <div
+                          className="h-2 sm:h-3 bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-1000 ease-out"
+                          style={{
+                            width: `${Math.min(skill.level * (skillProgress.backend / 90), skill.level)}%`
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Database Skills */}
+              <div className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-6 sm:mb-8">
+                  <div className="p-2 sm:p-3 bg-purple-500/20 rounded-lg sm:rounded-xl">
+                    <Database className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white">Database Technologies</h3>
+                    <p className="text-slate-400 text-xs sm:text-sm">{skillProgress.databases}% Proficiency</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 sm:space-y-6">
+                  {skills.databases.map((skill, index) => (
+                    <div key={index} className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-300 font-medium text-sm sm:text-base">{skill.name}</span>
+                        <span className="text-slate-400 text-xs sm:text-sm">{skill.level}%</span>
+                      </div>
+                      <div className="w-full bg-slate-700/50 rounded-full h-2 sm:h-3 overflow-hidden">
+                        <div
+                          className="h-2 sm:h-3 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full transition-all duration-1000 ease-out"
+                          style={{
+                            width: `${Math.min(skill.level * (skillProgress.databases / 85), skill.level)}%`
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Other Skills */}
+              <div className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-6 sm:mb-8">
+                  <div className="p-2 sm:p-3 bg-yellow-500/20 rounded-lg sm:rounded-xl">
+                    <Star className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white">Tools & Technologies</h3>
+                    <p className="text-slate-400 text-xs sm:text-sm">{skillProgress.other}% Proficiency</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 sm:space-y-6">
+                  {skills.other.map((skill, index) => (
+                    <div key={index} className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-300 font-medium text-sm sm:text-base">{skill.name}</span>
+                        <span className="text-slate-400 text-xs sm:text-sm">{skill.level}%</span>
+                      </div>
+                      <div className="w-full bg-slate-700/50 rounded-full h-2 sm:h-3 overflow-hidden">
+                        <div
+                          className="h-2 sm:h-3 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full transition-all duration-1000 ease-out"
+                          style={{
+                            width: `${Math.min(skill.level * (skillProgress.other / 90), skill.level)}%`
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Services Section */}
+        <section className="py-20 px-6 bg-slate-900/20">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">
+              What I Offer
+            </h2>
+            <p className="text-lg text-slate-400 text-center mb-16 max-w-3xl mx-auto">
+              Comprehensive development services tailored to bring your vision to life
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {services.map((service, index) => {
+                const IconComponent = service.icon;
+                return (
+                  <div
+                    key={index}
+                    className="group bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-3xl p-8 hover:bg-slate-800/30 hover:border-slate-600/50 transition-all duration-300 hover:scale-105"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                    <div className="flex items-start gap-6">
+                      <div className="p-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                        <IconComponent className="w-8 h-8 text-blue-400" />
+                      </div>
+                    <div className="flex-1">
+                        <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors duration-300">
+                          {service.title}
+                        </h3>
+                        <p className="text-slate-300 mb-6 leading-relaxed">
+                          {service.description}
+                        </p>
+                        <div className="space-y-3">
+                          {service.features.map((feature, idx) => (
+                            <div key={idx} className="flex items-center gap-3">
+                              <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                              <span className="text-slate-300 text-sm">{feature}</span>
+                      </div>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Achievements Section */}
+        <section className="py-20 px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">
+              Achievements & Milestones
+            </h2>
+            <p className="text-lg text-slate-400 text-center mb-16 max-w-3xl mx-auto">
+              Key accomplishments that showcase my dedication and expertise
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {achievements.map((achievement, index) => {
+                const IconComponent = achievement.icon;
+                return (
+                  <div
+                    key={index}
+                    className="group bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-3xl p-8 hover:bg-slate-800/30 hover:border-slate-600/50 transition-all duration-300 hover:scale-105"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className="flex items-start gap-6">
+                      <div className="p-4 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                        <IconComponent className="w-8 h-8 text-emerald-400" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors duration-300">
+                            {achievement.title}
+                          </h3>
+                          <span className="text-sm text-slate-500 bg-slate-800/50 px-3 py-1 rounded-full">
+                            {achievement.date}
+                        </span>
+                        </div>
+                        <p className="text-slate-300 leading-relaxed">
+                          {achievement.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+                {/* Contact Section */}
+        <section className="py-12 sm:py-20 px-4 sm:px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">
+                Let&apos;s Work Together
+              </h2>
+              <p className="text-base sm:text-lg text-slate-400 mb-8 sm:mb-12 max-w-2xl mx-auto px-4">
+                I&apos;m always open to discussing new opportunities, interesting projects, or just having a chat about technology.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
+              {/* Contact Form */}
+              <div className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Send a Message</h3>
+
+                {isSubmitted ? (
+                  <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center animate-fade-in">
+                    <div className="flex justify-center mb-4">
+                      <CheckCircle className="w-12 h-12 sm:w-16 sm:h-16 text-emerald-400" />
+                    </div>
+                    <h4 className="text-lg sm:text-xl font-semibold text-white mb-2">Message Sent!</h4>
+                    <p className="text-emerald-300 text-sm sm:text-base">Thank you for reaching out. I&apos;ll get back to you soon!</p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleContactSubmit} className="space-y-4 sm:space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
+                          Name
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          value={contactForm.name}
+                          onChange={handleContactChange}
+                          required
+                          className="w-full px-3 sm:px-4 py-3 bg-slate-900/50 border border-slate-700/50 rounded-lg sm:rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
+                          placeholder="Your name"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={contactForm.email}
+                          onChange={handleContactChange}
+                          required
+                          className="w-full px-3 sm:px-4 py-3 bg-slate-900/50 border border-slate-700/50 rounded-lg sm:rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
+                          placeholder="your@email.com"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="subject" className="block text-sm font-medium text-slate-300 mb-2">
+                        Subject
+                      </label>
+                      <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        value={contactForm.subject}
+                        onChange={handleContactChange}
+                        required
+                        className="w-full px-3 sm:px-4 py-3 bg-slate-900/50 border border-slate-700/50 rounded-lg sm:rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
+                        placeholder="Project discussion"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">
+                        Message
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={contactForm.message}
+                        onChange={handleContactChange}
+                        required
+                        rows={4}
+                        className="w-full px-3 sm:px-4 py-3 bg-slate-900/50 border border-slate-700/50 rounded-lg sm:rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none text-sm sm:text-base"
+                        placeholder="Tell me about your project..."
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg sm:rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25 text-sm sm:text-base"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+                          Send Message
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+
+              {/* Contact Info & Quick Actions */}
+              <div className="space-y-6 sm:space-y-8">
+                <div className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Get In Touch</h3>
+                  <div className="space-y-4 sm:space-y-6">
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <div className="p-2 sm:p-3 bg-blue-500/20 rounded-lg sm:rounded-xl">
+                        <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
+                      </div>
+                      <div>
+                        <p className="text-slate-300 font-medium text-sm sm:text-base">Email</p>
+                        <a href={`mailto:${personalInfo.email}`} className="text-blue-400 hover:text-blue-300 transition-colors text-sm sm:text-base break-all sm:break-normal">
+                          {personalInfo.email}
+                        </a>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <div className="p-2 sm:p-3 bg-green-500/20 rounded-lg sm:rounded-xl">
+                        <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
+                      </div>
+                      <div>
+                        <p className="text-slate-300 font-medium text-sm sm:text-base">Phone</p>
+                        <a href={`tel:${personalInfo.phone}`} className="text-green-400 hover:text-green-300 transition-colors text-sm sm:text-base">
+                          {personalInfo.phone}
+                        </a>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <div className="p-2 sm:p-3 bg-purple-500/20 rounded-lg sm:rounded-xl">
+                        <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
+                      </div>
+                      <div>
+                        <p className="text-slate-300 font-medium text-sm sm:text-base">Location</p>
+                        <p className="text-purple-400 text-sm sm:text-base">{personalInfo.location}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Quick Actions</h3>
+                  <div className="space-y-3 sm:space-y-4">
+                    <a
+                      href={personalInfo.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-slate-800/50 border border-slate-700/50 text-white rounded-lg sm:rounded-xl font-semibold hover:bg-slate-700/50 hover:border-slate-600/50 transition-all duration-300 hover:scale-105 text-sm sm:text-base"
+                    >
+                      <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
+                      Connect on LinkedIn
+                    </a>
+                    <a
+                      href={personalInfo.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-slate-800/50 border border-slate-700/50 text-white rounded-lg sm:rounded-xl font-semibold hover:bg-slate-700/50 hover:border-slate-600/50 transition-all duration-300 hover:scale-105 text-sm sm:text-base"
+                    >
+                      <Github className="w-4 h-4 sm:w-5 sm:h-5" />
+                      View GitHub Profile
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -467,7 +1251,7 @@ export default function Home() {
         <footer className="py-12 px-6 border-t border-slate-800/50">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-slate-400 text-sm">
-              © 2024 Prabudda. Crafting digital experiences with passion and precision.
+              © 2024 {personalInfo.name}. Built with passion and modern technologies.
             </p>
           </div>
         </footer>
