@@ -17,9 +17,7 @@ import {
   Star,
   Award,
   Users,
-  Coffee,
   Zap,
-  Calendar,
   TrendingUp,
   BookOpen,
   Send,
@@ -30,12 +28,6 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
-  const [counters, setCounters] = useState({
-    yearsExperience: 0,
-    projectsCompleted: 0,
-    technologies: 0,
-    cupsOfCoffee: 0
-  });
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
@@ -46,16 +38,9 @@ export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [typedText, setTypedText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
-  const [skillProgress, setSkillProgress] = useState({
-    frontend: 0,
-    backend: 0,
-    databases: 0,
-    other: 0
-  });
   const [scrollProgress, setScrollProgress] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
 
   // Mouse tracking for interactive effects
@@ -190,99 +175,6 @@ export default function Home() {
 
     return () => clearTimeout(timeoutId);
   }, [isVisible]);
-
-  // Counter animation
-  useEffect(() => {
-    const targetCounters = {
-      yearsExperience: 1,
-      projectsCompleted: 2,
-      technologies: 12,
-      cupsOfCoffee: 365
-    };
-
-    const animateCounters = () => {
-      const duration = 2000;
-      const startTime = Date.now();
-
-      const updateCounters = () => {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-
-        setCounters({
-          yearsExperience: Math.floor(targetCounters.yearsExperience * progress),
-          projectsCompleted: Math.floor(targetCounters.projectsCompleted * progress),
-          technologies: Math.floor(targetCounters.technologies * progress),
-          cupsOfCoffee: Math.floor(targetCounters.cupsOfCoffee * progress)
-        });
-
-        if (progress < 1) {
-          requestAnimationFrame(updateCounters);
-        }
-      };
-
-      updateCounters();
-    };
-
-    if (statsRef.current) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              animateCounters();
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-
-      observer.observe(statsRef.current);
-      return () => observer.disconnect();
-    }
-  }, [counters]);
-
-  // Skill progress animation
-  useEffect(() => {
-    if (skillsRef.current) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const animateSkills = () => {
-                const duration = 2000;
-                const startTime = Date.now();
-
-                const updateProgress = () => {
-                  const elapsed = Date.now() - startTime;
-                  const currentProgress = Math.min(elapsed / duration, 1);
-
-                  setSkillProgress({
-                    frontend: Math.floor(95 * currentProgress),
-                    backend: Math.floor(90 * currentProgress),
-                    databases: Math.floor(85 * currentProgress),
-                    other: Math.floor(90 * currentProgress)
-                  });
-
-                  if (currentProgress < 1) {
-                    requestAnimationFrame(updateProgress);
-                  }
-                };
-
-                updateProgress();
-              };
-
-              animateSkills();
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-
-      observer.observe(skillsRef.current);
-      return () => observer.disconnect();
-    }
-  }, []);
 
   // Contact form handlers
   const handleContactSubmit = async (e: React.FormEvent) => {
@@ -463,37 +355,6 @@ export default function Home() {
     }
   ];
 
-  const stats = [
-    {
-      icon: Calendar,
-      value: counters.yearsExperience,
-      label: "Years Experience",
-      suffix: "+",
-      color: "from-blue-500 to-cyan-500"
-    },
-    {
-      icon: Code,
-      value: counters.projectsCompleted,
-      label: "Projects Completed",
-      suffix: "+",
-      color: "from-emerald-500 to-teal-500"
-    },
-    {
-      icon: Zap,
-      value: counters.technologies,
-      label: "Technologies",
-      suffix: "+",
-      color: "from-purple-500 to-pink-500"
-    },
-    {
-      icon: Coffee,
-      value: counters.cupsOfCoffee,
-      label: "Cups of Coffee",
-      suffix: "+",
-      color: "from-amber-500 to-orange-500"
-    }
-  ];
-
   // Social media links
   const socialLinks = [
     { name: 'GitHub', icon: Github, url: personalInfo.github, color: 'hover:text-gray-300' },
@@ -626,37 +487,6 @@ export default function Home() {
                   >
                     <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300" />
                   </a>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-                {/* Statistics Section */}
-        <section ref={statsRef} className="py-12 sm:py-20 px-4 sm:px-6 bg-slate-900/20">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-8 sm:mb-12">
-              By The Numbers
-            </h2>
-            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-              {stats.map((stat, index) => {
-                const IconComponent = stat.icon;
-                return (
-                  <div
-                    key={index}
-                    className="bg-slate-800/20 backdrop-blur-sm border border-slate-700/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 text-center hover:bg-slate-800/30 transition-all duration-300 hover:scale-105 hover:border-slate-600/50"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <div className="p-3 sm:p-4 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 w-fit mx-auto">
-                      <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-slate-300" />
-                    </div>
-                    <div className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
-                      {stat.value.toLocaleString()}{stat.suffix}
-                    </div>
-                    <div className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider font-medium">
-                      {stat.label}
-                    </div>
-                  </div>
                 );
               })}
             </div>
@@ -843,7 +673,7 @@ export default function Home() {
               Skills & Technologies
             </h2>
             <p className="text-base sm:text-lg text-slate-400 text-center mb-12 sm:mb-16 max-w-3xl mx-auto px-4">
-              My technical expertise and proficiency levels in various technologies
+              My technical expertise across various technologies and tools
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
@@ -855,25 +685,19 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-lg sm:text-xl font-bold text-white">Frontend Development</h3>
-                    <p className="text-slate-400 text-xs sm:text-sm">{skillProgress.frontend}% Proficiency</p>
+                    <p className="text-slate-400 text-xs sm:text-sm">Modern web technologies</p>
                   </div>
                 </div>
 
-                <div className="space-y-4 sm:space-y-6">
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   {skills.frontend.map((skill, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-slate-300 font-medium text-sm sm:text-base">{skill.name}</span>
-                        <span className="text-slate-400 text-xs sm:text-sm">{skill.level}%</span>
-                      </div>
-                      <div className="w-full bg-slate-700/50 rounded-full h-2 sm:h-3 overflow-hidden">
-                        <div
-                          className="h-2 sm:h-3 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-1000 ease-out"
-                          style={{
-                            width: `${Math.min(skill.level * (skillProgress.frontend / 95), skill.level)}%`
-                          }}
-                        />
-                      </div>
+                    <div
+                      key={index}
+                      className="group bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 hover:border-blue-400/40 hover:from-blue-500/20 hover:to-blue-600/20 transition-all duration-300 cursor-pointer"
+                    >
+                      <span className="text-blue-300 font-medium text-sm sm:text-base group-hover:text-blue-200 transition-colors">
+                        {skill.name}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -887,25 +711,19 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-lg sm:text-xl font-bold text-white">Backend Development</h3>
-                    <p className="text-slate-400 text-xs sm:text-sm">{skillProgress.backend}% Proficiency</p>
+                    <p className="text-slate-400 text-xs sm:text-sm">Server-side technologies</p>
                   </div>
                 </div>
 
-                <div className="space-y-4 sm:space-y-6">
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   {skills.backend.map((skill, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-slate-300 font-medium text-sm sm:text-base">{skill.name}</span>
-                        <span className="text-slate-400 text-xs sm:text-sm">{skill.level}%</span>
-                      </div>
-                      <div className="w-full bg-slate-700/50 rounded-full h-2 sm:h-3 overflow-hidden">
-                        <div
-                          className="h-2 sm:h-3 bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-1000 ease-out"
-                          style={{
-                            width: `${Math.min(skill.level * (skillProgress.backend / 90), skill.level)}%`
-                          }}
-                        />
-                      </div>
+                    <div
+                      key={index}
+                      className="group bg-gradient-to-r from-green-500/10 to-green-600/10 border border-green-500/20 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 hover:border-green-400/40 hover:from-green-500/20 hover:to-green-600/20 transition-all duration-300 cursor-pointer"
+                    >
+                      <span className="text-green-300 font-medium text-sm sm:text-base group-hover:text-green-200 transition-colors">
+                        {skill.name}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -919,25 +737,19 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-lg sm:text-xl font-bold text-white">Database Technologies</h3>
-                    <p className="text-slate-400 text-xs sm:text-sm">{skillProgress.databases}% Proficiency</p>
+                    <p className="text-slate-400 text-xs sm:text-sm">Data storage & management</p>
                   </div>
                 </div>
 
-                <div className="space-y-4 sm:space-y-6">
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   {skills.databases.map((skill, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-slate-300 font-medium text-sm sm:text-base">{skill.name}</span>
-                        <span className="text-slate-400 text-xs sm:text-sm">{skill.level}%</span>
-                      </div>
-                      <div className="w-full bg-slate-700/50 rounded-full h-2 sm:h-3 overflow-hidden">
-                        <div
-                          className="h-2 sm:h-3 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full transition-all duration-1000 ease-out"
-                          style={{
-                            width: `${Math.min(skill.level * (skillProgress.databases / 85), skill.level)}%`
-                          }}
-                        />
-                      </div>
+                    <div
+                      key={index}
+                      className="group bg-gradient-to-r from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 hover:border-purple-400/40 hover:from-purple-500/20 hover:to-purple-600/20 transition-all duration-300 cursor-pointer"
+                    >
+                      <span className="text-purple-300 font-medium text-sm sm:text-base group-hover:text-purple-200 transition-colors">
+                        {skill.name}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -951,25 +763,19 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-lg sm:text-xl font-bold text-white">Tools & Technologies</h3>
-                    <p className="text-slate-400 text-xs sm:text-sm">{skillProgress.other}% Proficiency</p>
+                    <p className="text-slate-400 text-xs sm:text-sm">Development tools & more</p>
                   </div>
                 </div>
 
-                <div className="space-y-4 sm:space-y-6">
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   {skills.other.map((skill, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-slate-300 font-medium text-sm sm:text-base">{skill.name}</span>
-                        <span className="text-slate-400 text-xs sm:text-sm">{skill.level}%</span>
-                      </div>
-                      <div className="w-full bg-slate-700/50 rounded-full h-2 sm:h-3 overflow-hidden">
-                        <div
-                          className="h-2 sm:h-3 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full transition-all duration-1000 ease-out"
-                          style={{
-                            width: `${Math.min(skill.level * (skillProgress.other / 90), skill.level)}%`
-                          }}
-                        />
-                      </div>
+                    <div
+                      key={index}
+                      className="group bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 hover:border-yellow-400/40 hover:from-yellow-500/20 hover:to-orange-500/20 transition-all duration-300 cursor-pointer"
+                    >
+                      <span className="text-yellow-300 font-medium text-sm sm:text-base group-hover:text-yellow-200 transition-colors">
+                        {skill.name}
+                      </span>
                     </div>
                   ))}
                 </div>
