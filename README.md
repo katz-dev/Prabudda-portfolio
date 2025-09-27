@@ -46,16 +46,6 @@ src/
 └── lib/                # Utility functions
 ```
 
-## 🚢 Deployment
-
-The project includes Docker configuration for easy deployment:
-
-```bash
-# Build and run with Docker
-docker-compose up -d --build
-```
-
-See `DEPLOYMENT.md` for complete deployment instructions.
 
 ## ✨ Features
 
@@ -64,4 +54,4 @@ See `DEPLOYMENT.md` for complete deployment instructions.
 - 📱 Fully responsive
 - ⚡ Lightning fast with Next.js
 - 🔧 TypeScript for type safety
-- 🎯 SEO optimizedd
+- 🎯 SEO optimized
