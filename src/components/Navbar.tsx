@@ -46,20 +46,23 @@ export const Navbar = () => {
     };
 
     return (
-        <motion.nav
+        <motion.div
             variants={{
                 visible: { y: 0 },
-                hidden: { y: "-100%" },
+                hidden: { y: "-150%" },
             }}
             animate={hidden ? "hidden" : "visible"}
             transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="fixed top-0 inset-x-0 h-16 z-50 bg-background/60 backdrop-blur-md border-b border-border/40 supports-[backdrop-filter]:bg-background/60"
+            className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl"
         >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-                <div className="flex items-center justify-between h-full">
+            <nav className="relative backdrop-blur-2xl bg-white/10 dark:bg-black/20 border border-white/20 dark:border-white/10 rounded-full shadow-2xl shadow-black/10 dark:shadow-black/40 px-6 py-3">
+                {/* Glassmorphism overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/10 to-transparent dark:from-white/5 dark:via-white/2 dark:to-transparent rounded-full pointer-events-none" />
+                
+                <div className="relative flex items-center justify-between">
                     {/* Logo */}
                     <div
-                        className="flex-shrink-0 cursor-pointer font-bold text-xl bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent hover:scale-105 transition-transform"
+                        className="flex-shrink-0 cursor-pointer font-bold text-xl bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300"
                         onClick={() => scrollToSection("#hero")}
                     >
                         &lt;P /&gt;
@@ -67,52 +70,55 @@ export const Navbar = () => {
 
                     {/* Desktop Nav */}
                     <div className="hidden md:block">
-                        <div className="ml-10 flex items-baseline space-x-4">
+                        <div className="flex items-center space-x-1">
                             {navItems.map((item) => (
                                 <button
                                     key={item.name}
                                     onClick={() => scrollToSection(item.href)}
-                                    className="text-muted-foreground hover:text-foreground hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 flex items-center gap-2"
+                                    className="text-foreground/70 hover:text-foreground hover:bg-white/20 dark:hover:bg-white/10 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 backdrop-blur-sm"
                                 >
                                     <item.icon className="w-4 h-4" />
                                     {item.name}
                                 </button>
                             ))}
-                            <div className="ml-4">
+                            <div className="ml-2 pl-2 border-l border-white/20">
                                 <ThemeToggle />
                             </div>
                         </div>
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <div className="-mr-2 flex md:hidden gap-4">
+                    <div className="flex md:hidden gap-2 items-center">
                         <ThemeToggle />
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
+                            className="inline-flex items-center justify-center p-2 rounded-full text-foreground hover:bg-white/20 dark:hover:bg-white/10 focus:outline-none transition-all duration-300"
                         >
-                            {isOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
+                            {isOpen ? <X className="block h-5 w-5" /> : <Menu className="block h-5 w-5" />}
                         </button>
                     </div>
                 </div>
-            </div>
+            </nav>
 
             {/* Mobile Menu */}
             <motion.div
                 initial="closed"
                 animate={isOpen ? "open" : "closed"}
                 variants={{
-                    open: { opacity: 1, height: "auto" },
-                    closed: { opacity: 0, height: 0 },
+                    open: { opacity: 1, height: "auto", marginTop: 12 },
+                    closed: { opacity: 0, height: 0, marginTop: 0 },
                 }}
-                className="md:hidden overflow-hidden bg-background/95 backdrop-blur-xl border-b border-border/40"
+                className="md:hidden overflow-hidden backdrop-blur-2xl bg-white/10 dark:bg-black/20 border border-white/20 dark:border-white/10 rounded-3xl shadow-2xl shadow-black/10 dark:shadow-black/40"
             >
-                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                {/* Glassmorphism overlay for mobile menu */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/10 to-transparent dark:from-white/5 dark:via-white/2 dark:to-transparent rounded-3xl pointer-events-none" />
+                
+                <div className="relative px-4 py-4 space-y-2">
                     {navItems.map((item) => (
                         <button
                             key={item.name}
                             onClick={() => scrollToSection(item.href)}
-                            className="text-muted-foreground hover:text-foreground hover:bg-white/10 block px-3 py-2 rounded-md text-base font-medium w-full text-left flex items-center gap-3"
+                            className="text-foreground/70 hover:text-foreground hover:bg-white/20 dark:hover:bg-white/10 block px-4 py-3 rounded-2xl text-base font-medium w-full text-left flex items-center gap-3 transition-all duration-300"
                         >
                             <item.icon className="w-5 h-5" />
                             {item.name}
@@ -120,6 +126,6 @@ export const Navbar = () => {
                     ))}
                 </div>
             </motion.div>
-        </motion.nav>
+        </motion.div>
     );
 };
