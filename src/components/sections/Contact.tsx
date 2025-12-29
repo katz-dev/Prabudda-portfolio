@@ -36,9 +36,9 @@ export const Contact = () => {
 
                     <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Let's work together!</h2>
+                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Let&apos;s work together!</h2>
                             <p className="text-slate-400 mb-8">
-                                Have a project in mind or just want to chat? Feel free to reach out. I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
+                                Have a project in mind or just want to chat? Feel free to reach out. I&apos;m always open to discussing new projects, creative ideas or opportunities to be part of your visions.
                             </p>
 
                             <div className="space-y-4">

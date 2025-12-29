@@ -3,23 +3,22 @@
 import { motion } from "framer-motion";
 import { skills } from "@/data/portfolio";
 import { Code, Globe, Database, Star } from "lucide-react";
+import { LucideIcon } from "lucide-react";
+
+interface SkillItem {
+    name: string;
+}
+
+interface SkillCardProps {
+    title: string;
+    icon: LucideIcon;
+    className: string;
+    iconColor: string;
+    items: SkillItem[];
+    delay: number;
+}
 
 export const Skills = () => {
-    const container = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
-        }
-    };
-
-    const item = {
-        hidden: { opacity: 0, scale: 0.8 },
-        show: { opacity: 1, scale: 1 }
-    };
-
     return (
         <section id="skills" className="py-20 px-6 relative z-10 bg-slate-100/50 dark:bg-black/20">
             <div className="max-w-6xl mx-auto">
@@ -76,7 +75,7 @@ export const Skills = () => {
     );
 };
 
-const SkillCard = ({ title, icon: Icon, className, iconColor, items, delay }: any) => {
+const SkillCard = ({ title, icon: Icon, className, iconColor, items, delay }: SkillCardProps) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -93,7 +92,7 @@ const SkillCard = ({ title, icon: Icon, className, iconColor, items, delay }: an
             </div>
 
             <div className="flex flex-wrap gap-3">
-                {items.map((skill: any, idx: number) => (
+                {items.map((skill: SkillItem, idx: number) => (
                     <div
                         key={idx}
                         className="group relative px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 transition-colors cursor-default overflow-hidden"

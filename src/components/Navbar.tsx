@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { ThemeToggle } from "./theme-toggle";
 import { Menu, X, Code, User, Briefcase, FolderGit2, Cpu, Mail } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const navItems = [
     { name: "Home", href: "#hero", icon: Code },
