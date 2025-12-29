@@ -1,8 +1,8 @@
 # Base image with Node.js 22 (compatible with Next.js 15)
 FROM node:22-alpine AS base
 
-# Install pnpm globally
-RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
+# Install pnpm globally using npm
+RUN npm install -g pnpm@9.15.4
 
 # Set working directory
 WORKDIR /app
