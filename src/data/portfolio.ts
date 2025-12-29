@@ -23,7 +23,7 @@ export const personalInfo = {
     portfolio: "https://github.com/katz-dev" // Using github as portfolio for now
 };
 
-export const summary = "I am a dedicated Full-Stack Developer with over a year of experience, including significant work in developing and administering FiveM servers. I possess a strong foundation in MERN stack technologies (MongoDB, Express.js, React, Node.js), particularly JavaScript, and extensive experience with frameworks like NestJS for robust backend development and Next.js for modern, high-performance frontends. I have a solid understanding of database systems like MySQL and MongoDB. My knowledge of Lua programming further enhances my ability to create immersive gaming experiences. I am passionate about crafting innovative solutions and delivering high-quality work.";
+export const summary = "I am a dedicated Software Support Engineer and Full-Stack Developer with over 6 years of experience. Currently working at VFT HOLDINGS (PVT) LTD, I specialize in supporting Futura HRIS systems, managing biometric device integration with ADMS and HRIS, and providing technical solutions. I possess a strong foundation in MERN stack technologies (MongoDB, Express.js, React, Node.js), particularly JavaScript, and extensive experience with frameworks like NestJS for robust backend development and Next.js for modern, high-performance frontends. I have solid expertise in database systems like MySQL and MongoDB, API testing with Postman, and technical troubleshooting. My knowledge of Lua programming further enhances my ability to create immersive gaming experiences. I am passionate about crafting innovative solutions and delivering high-quality work.";
 
 export const education = {
     degree: "BSc (Hons) Computer Security",
@@ -34,10 +34,34 @@ export const education = {
 
 export const experience = [
     {
+        title: "Associate Software Support Engineer",
+        company: "VFT HOLDINGS (PVT) LTD",
+        location: "Maharagama, Western Province, Sri Lanka",
+        period: "November 2025 - Present",
+        description: [
+            "Providing technical support for Futura HRIS by combining customer support with technical investigation",
+            "Managing biometric device integration with ADMS and HRIS systems",
+            "Troubleshooting complex technical issues and providing solutions to ensure system reliability",
+            "Utilizing MySQL and Postman API for database management and API testing"
+        ]
+    },
+    {
+        title: "Trainee Software Support Engineer",
+        company: "VFT HOLDINGS (PVT) LTD",
+        location: "Maharagama, Western Province, Sri Lanka",
+        period: "September 2025 - November 2025",
+        description: [
+            "Supported Futura HRIS by combining customer support with technical investigation",
+            "Managed biometric device integration with ADMS and HRIS systems",
+            "Developed troubleshooting skills for hardware and software integration",
+            "Worked with MySQL databases and API testing tools"
+        ]
+    },
+    {
         title: "Full Stack Developer",
-        company: "Fiver",
+        company: "Fiverr",
         location: "Remote",
-        period: "January 2021 - Present",
+        period: "2019 - Present",
         description: [
             "Developed full-stack applications using Next.js (frontend) and NestJS (backend), leveraging MongoDB for data management",
             "Designed and implemented robust RESTful APIs to power application features",
@@ -47,9 +71,9 @@ export const experience = [
     },
     {
         title: "FiveM Game Developer",
-        company: "Fiver",
+        company: "Fiverr",
         location: "Remote",
-        period: "2021 - Present",
+        period: "2019 - Present",
         description: [
             "Developed and administered immersive FiveM experiences utilizing frameworks such as QBCore, QBOX, ESX, and Standalone",
             "Proficient in Lua, HTML, JavaScript, TypeScript, and MySQL for full-stack FiveM development",
@@ -103,7 +127,8 @@ export const skills = {
     ],
     other: [
         { name: "Git", level: 90 },
-        { name: "Lua", level: 80 }
+        { name: "Lua", level: 80 },
+        { name: "Postman API", level: 85 }
     ]
 };
 

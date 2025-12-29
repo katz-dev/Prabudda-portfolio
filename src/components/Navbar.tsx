@@ -59,43 +59,52 @@ export const Navbar = () => {
                 {/* Glassmorphism overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/10 to-transparent dark:from-white/5 dark:via-white/2 dark:to-transparent rounded-full pointer-events-none" />
                 
-                <div className="relative flex items-center justify-between">
-                    {/* Logo */}
-                    <div
-                        className="flex-shrink-0 cursor-pointer font-bold text-xl bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300"
-                        onClick={() => scrollToSection("#hero")}
-                    >
-                        &lt;P /&gt;
-                    </div>
-
-                    {/* Desktop Nav */}
-                    <div className="hidden md:block">
-                        <div className="flex items-center space-x-1">
-                            {navItems.map((item) => (
-                                <button
-                                    key={item.name}
-                                    onClick={() => scrollToSection(item.href)}
-                                    className="text-foreground/70 hover:text-foreground hover:bg-white/20 dark:hover:bg-white/10 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 backdrop-blur-sm"
-                                >
-                                    <item.icon className="w-4 h-4" />
-                                    {item.name}
-                                </button>
-                            ))}
-                            <div className="ml-2 pl-2 border-l border-white/20">
-                                <ThemeToggle />
-                            </div>
+                <div className="relative flex items-center justify-center">
+                    {/* Desktop Nav - Centered */}
+                    <div className="hidden md:flex items-center space-x-1">
+                        {/* Logo */}
+                        <div
+                            className="flex-shrink-0 cursor-pointer font-bold text-xl bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300 mr-4"
+                            onClick={() => scrollToSection("#hero")}
+                        >
+                            &lt;P /&gt;
+                        </div>
+                        
+                        {navItems.map((item) => (
+                            <button
+                                key={item.name}
+                                onClick={() => scrollToSection(item.href)}
+                                className="text-foreground/70 hover:text-foreground hover:bg-white/20 dark:hover:bg-white/10 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 backdrop-blur-sm"
+                            >
+                                <item.icon className="w-4 h-4" />
+                                {item.name}
+                            </button>
+                        ))}
+                        <div className="ml-2 pl-2 border-l border-white/20">
+                            <ThemeToggle />
                         </div>
                     </div>
 
-                    {/* Mobile Menu Button */}
-                    <div className="flex md:hidden gap-2 items-center">
-                        <ThemeToggle />
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-full text-foreground hover:bg-white/20 dark:hover:bg-white/10 focus:outline-none transition-all duration-300"
+                    {/* Mobile View - Space between */}
+                    <div className="flex md:hidden items-center justify-between w-full">
+                        {/* Logo */}
+                        <div
+                            className="flex-shrink-0 cursor-pointer font-bold text-xl bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300"
+                            onClick={() => scrollToSection("#hero")}
                         >
-                            {isOpen ? <X className="block h-5 w-5" /> : <Menu className="block h-5 w-5" />}
-                        </button>
+                            &lt;P /&gt;
+                        </div>
+                        
+                        {/* Mobile Menu Button */}
+                        <div className="flex gap-2 items-center">
+                            <ThemeToggle />
+                            <button
+                                onClick={() => setIsOpen(!isOpen)}
+                                className="inline-flex items-center justify-center p-2 rounded-full text-foreground hover:bg-white/20 dark:hover:bg-white/10 focus:outline-none transition-all duration-300"
+                            >
+                                {isOpen ? <X className="block h-5 w-5" /> : <Menu className="block h-5 w-5" />}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </nav>
