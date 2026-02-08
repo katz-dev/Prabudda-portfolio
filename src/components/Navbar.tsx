@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { ThemeToggle } from "./theme-toggle";
-import { Menu, X, Code, User, Briefcase, FolderGit2, Cpu, Mail } from "lucide-react";
+import { Menu, X, Code, User, Briefcase, FolderGit2, Cpu, Mail, Hammer } from "lucide-react";
 
 const navItems = [
     { name: "Home", href: "#hero", icon: Code },
     { name: "About", href: "#about", icon: User },
     { name: "Experience", href: "#experience", icon: Briefcase },
     { name: "Projects", href: "#projects", icon: FolderGit2 },
+    { name: "Work", href: "#work", icon: Hammer },
     { name: "Skills", href: "#skills", icon: Cpu },
     { name: "Contact", href: "#contact", icon: Mail },
 ];
@@ -58,7 +59,7 @@ export const Navbar = () => {
             <nav className="relative backdrop-blur-2xl bg-white/10 dark:bg-black/20 border border-white/20 dark:border-white/10 rounded-full shadow-2xl shadow-black/10 dark:shadow-black/40 px-6 py-3">
                 {/* Glassmorphism overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/10 to-transparent dark:from-white/5 dark:via-white/2 dark:to-transparent rounded-full pointer-events-none" />
-                
+
                 <div className="relative flex items-center justify-center">
                     {/* Desktop Nav - Centered */}
                     <div className="hidden md:flex items-center space-x-1">
@@ -69,7 +70,7 @@ export const Navbar = () => {
                         >
                             &lt;P /&gt;
                         </div>
-                        
+
                         {navItems.map((item) => (
                             <button
                                 key={item.name}
@@ -94,7 +95,7 @@ export const Navbar = () => {
                         >
                             &lt;P /&gt;
                         </div>
-                        
+
                         {/* Mobile Menu Button */}
                         <div className="flex gap-2 items-center">
                             <ThemeToggle />
@@ -121,7 +122,7 @@ export const Navbar = () => {
             >
                 {/* Glassmorphism overlay for mobile menu */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/10 to-transparent dark:from-white/5 dark:via-white/2 dark:to-transparent rounded-3xl pointer-events-none" />
-                
+
                 <div className="relative px-4 py-4 space-y-2">
                     {navItems.map((item) => (
                         <button
