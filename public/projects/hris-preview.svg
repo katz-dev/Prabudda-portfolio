@@ -1,0 +1,69 @@
+<svg width="800" height="480" viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#060E1A"/>
+      <stop offset="1" stop-color="#0E1E34"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" rx="16" fill="url(#bg)"/>
+
+  <!-- Enterprise Header -->
+  <rect x="40" y="30" width="720" height="48" rx="8" fill="#112236" stroke="#1E3A5F"/>
+  <rect x="56" y="44" width="20" height="20" rx="4" fill="#2563EB"/>
+  <text x="86" y="58" fill="#F8FAFC" font-family="sans-serif" font-size="13" font-weight="bold">FUTURA HRIS &amp; ADMS SUPPORT CASE STUDY</text>
+  <text x="410" y="58" fill="#64748B" font-family="sans-serif" font-size="11">| Role: Software Support Engineer @ VFT Holdings</text>
+  <rect x="630" y="42" width="114" height="24" rx="12" fill="#10B981" fill-opacity="0.2" stroke="#10B981" stroke-width="0.5"/>
+  <circle cx="644" cy="54" r="4" fill="#10B981"/>
+  <text x="656" y="58" fill="#34D399" font-family="monospace" font-size="10" font-weight="bold">QA &amp; SYNC: OK</text>
+
+  <!-- Left: Biometric Hardware & ADMS Bridge -->
+  <rect x="40" y="96" width="240" height="344" rx="10" fill="#0B1624" stroke="#1E3A5F"/>
+  <text x="56" y="126" fill="#38BDF8" font-family="sans-serif" font-size="12" font-weight="bold">HARDWARE &amp; ADMS BRIDGE</text>
+  
+  <rect x="56" y="142" width="208" height="74" rx="6" fill="#101F33"/>
+  <text x="68" y="166" fill="#F8FAFC" font-family="sans-serif" font-size="12" font-weight="600">Time Attendance Terminals</text>
+  <text x="68" y="184" fill="#94A3B8" font-family="sans-serif" font-size="10">Fingerprint + Facial Recognition</text>
+  <text x="68" y="202" fill="#10B981" font-family="monospace" font-size="10">TCP/IP Port 4370 • ADMS Push</text>
+
+  <rect x="56" y="226" width="208" height="74" rx="6" fill="#101F33"/>
+  <text x="68" y="250" fill="#F8FAFC" font-family="sans-serif" font-size="12" font-weight="600">Automatic Data Server</text>
+  <text x="68" y="268" fill="#94A3B8" font-family="sans-serif" font-size="10">Real-time attendance ingestion</text>
+  <text x="68" y="286" fill="#38BDF8" font-family="monospace" font-size="10">Buffer: 0 Dropped Logs</text>
+
+  <rect x="56" y="310" width="208" height="114" rx="6" fill="#101F33"/>
+  <text x="68" y="334" fill="#F8FAFC" font-family="sans-serif" font-size="12" font-weight="600">Python Migration Scripts</text>
+  <text x="68" y="352" fill="#94A3B8" font-family="sans-serif" font-size="10">Automated ETL &amp; Schema Transform</text>
+  <rect x="68" y="364" width="184" height="46" rx="4" fill="#08101A"/>
+  <text x="76" y="382" fill="#06B6D4" font-family="monospace" font-size="9">python migrate_attendance.py</text>
+  <text x="76" y="398" fill="#10B981" font-family="monospace" font-size="9">[OK] 42,800 records updated</text>
+
+  <!-- Right: Attendance Engine & Analytics -->
+  <rect x="300" y="96" width="460" height="210" rx="10" fill="#0B1624" stroke="#1E3A5F"/>
+  <text x="320" y="126" fill="#F8FAFC" font-family="sans-serif" font-size="14" font-weight="bold">Attendance Calculation Engine</text>
+  <text x="320" y="146" fill="#64748B" font-family="sans-serif" font-size="11">Multi-shift algorithms, overtime calculation &amp; discrepancy resolution</text>
+
+  <!-- Data Accuracy KPIs -->
+  <rect x="320" y="164" width="130" height="64" rx="6" fill="#112236"/>
+  <text x="332" y="184" fill="#64748B" font-family="sans-serif" font-size="10">DATA ACCURACY</text>
+  <text x="332" y="214" fill="#10B981" font-family="sans-serif" font-size="22" font-weight="bold">100.0%</text>
+
+  <rect x="460" y="164" width="130" height="64" rx="6" fill="#112236"/>
+  <text x="472" y="184" fill="#64748B" font-family="sans-serif" font-size="10">QUERY LATENCY</text>
+  <text x="472" y="214" fill="#38BDF8" font-family="sans-serif" font-size="22" font-weight="bold">-40%</text>
+
+  <rect x="600" y="164" width="140" height="64" rx="6" fill="#112236"/>
+  <text x="612" y="184" fill="#64748B" font-family="sans-serif" font-size="10">API TEST COVERAGE</text>
+  <text x="612" y="214" fill="#A855F7" font-family="sans-serif" font-size="22" font-weight="bold">Postman CI</text>
+
+  <rect x="320" y="242" width="420" height="48" rx="6" fill="#0A1320"/>
+  <text x="334" y="270" fill="#38BDF8" font-family="monospace" font-size="11">MySQL Enterprise Schema · Stored Procedures · Automated Reconciliation</text>
+
+  <!-- Bottom: Postman Test Logs -->
+  <rect x="300" y="320" width="460" height="120" rx="10" fill="#0B1624" stroke="#1E3A5F"/>
+  <text x="320" y="344" fill="#38BDF8" font-family="monospace" font-size="11" font-weight="bold">AUTOMATED API REGRESSION SUITE (POSTMAN)</text>
+  <rect x="320" y="356" width="420" height="32" rx="4" fill="#112236"/>
+  <text x="334" y="376" fill="#34D399" font-family="monospace" font-size="10">PASS: POST /api/v2/adms/sync-payload [Status: 200 OK | 24ms]</text>
+  <rect x="320" y="394" width="420" height="32" rx="4" fill="#112236"/>
+  <text x="334" y="414" fill="#34D399" font-family="monospace" font-size="10">PASS: GET /api/v2/attendance/audit-reconcile [0 Anomalies Reported]</text>
+</svg>

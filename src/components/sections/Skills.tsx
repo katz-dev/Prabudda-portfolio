@@ -1,107 +1,148 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { skills } from "@/data/portfolio";
-import { Code, Globe, Database, Star } from "lucide-react";
-import { LucideIcon } from "lucide-react";
-
-interface SkillItem {
-    name: string;
-}
-
-interface SkillCardProps {
-    title: string;
-    icon: LucideIcon;
-    className: string;
-    iconColor: string;
-    items: SkillItem[];
-    delay: number;
-}
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { skillsData } from "@/data/portfolio";
+import { Cpu } from "lucide-react";
 
 export const Skills = () => {
+    const [activeTab, setActiveTab] = useState<string>("all");
+
+    const filteredCategories = activeTab === "all"
+        ? skillsData.categories
+        : skillsData.categories.filter(cat => cat.id === activeTab);
+
     return (
-        <section id="skills" className="py-20 px-6 relative z-10 bg-slate-100/50 dark:bg-black/20">
-            <div className="max-w-6xl mx-auto">
+        <section id="skills" className="py-24 px-4 sm:px-6 relative z-10">
+            <div className="max-w-6xl mx-auto space-y-12">
+                
+                {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16"
+                    className="text-center space-y-3"
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Technical Arsenal</h2>
-                    <p className="text-slate-600 dark:text-slate-400">The tools and technologies I use to bring ideas to life.</p>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[#2563EB] dark:text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+                        <Cpu className="w-3.5 h-3.5" />
+                        <span>Technical Arsenal &amp; Capabilities</span>
+                    </div>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+                        Specialized Technologies
+                    </h2>
+                    <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                        Battle-tested across enterprise software support systems, modern SaaS applications, and high-performance game servers.
+                    </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Frontend */}
-                    <SkillCard
-                        title="Frontend Development"
-                        icon={Code}
-                        className="from-blue-500/20 to-blue-600/5"
-                        iconColor="text-blue-400"
-                        items={skills.frontend}
-                        delay={0}
-                    />
-                    {/* Backend */}
-                    <SkillCard
-                        title="Backend Development"
-                        icon={Globe}
-                        className="from-green-500/20 to-green-600/5"
-                        iconColor="text-green-400"
-                        items={skills.backend}
-                        delay={0.2}
-                    />
-                    {/* Database */}
-                    <SkillCard
-                        title="Database Technologies"
-                        icon={Database}
-                        className="from-purple-500/20 to-purple-600/5"
-                        iconColor="text-purple-400"
-                        items={skills.databases}
-                        delay={0.4}
-                    />
-                    {/* Tools */}
-                    <SkillCard
-                        title="Tools & Technologies"
-                        icon={Star}
-                        className="from-yellow-500/20 to-orange-600/5"
-                        iconColor="text-yellow-400"
-                        items={skills.other}
-                        delay={0.6}
-                    />
+                {/* Filter Navigation Tabs */}
+                <div className="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto">
+                    <button
+                        onClick={() => setActiveTab("all")}
+                        className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                            activeTab === "all"
+                                ? "bg-[#2563EB] text-white shadow-md shadow-blue-500/25"
+                                : "glass-panel text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                        }`}
+                    >
+                        All Stacks ({skillsData.categories.reduce((acc, cat) => acc + cat.skills.length, 0)})
+                    </button>
+                    {skillsData.categories.map((cat) => {
+                        const Icon = cat.icon;
+                        const isSelected = activeTab === cat.id;
+                        return (
+                            <button
+                                key={cat.id}
+                                onClick={() => setActiveTab(cat.id)}
+                                className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+                                    isSelected
+                                        ? "bg-[#2563EB] text-white shadow-md shadow-blue-500/25"
+                                        : "glass-panel text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                                }`}
+                            >
+                                <Icon className={`w-3.5 h-3.5 ${isSelected ? "text-white" : "text-cyan-500"}`} />
+                                {cat.title.split(" ")[0]}
+                            </button>
+                        );
+                    })}
                 </div>
+
+                {/* Skills Cards Grid */}
+                <motion.div
+                    layout
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                >
+                    <AnimatePresence>
+                        {filteredCategories.map((category) => {
+                            const IconComponent = category.icon;
+                            return (
+                                <motion.div
+                                    layout
+                                    key={category.id}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="glass-panel rounded-2xl p-6 flex flex-col justify-between hover:border-cyan-500/40 hover:-translate-y-1 transition-all duration-300 group shadow-md shadow-slate-900/5 dark:shadow-black/20"
+                                >
+                                    <div>
+                                        {/* Header with Icon */}
+                                        <div className="flex items-center gap-3.5 mb-4">
+                                            <div className="w-11 h-11 rounded-xl bg-cyan-500/10 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center border border-cyan-500/20 group-hover:scale-105 transition-transform">
+                                                <IconComponent className="w-5 h-5" />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-bold text-slate-900 dark:text-white text-base">
+                                                    {category.title}
+                                                </h3>
+                                                <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                                                    {category.skills.length} core competencies
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+                                            {category.description}
+                                        </p>
+
+                                        {/* Skills Chips */}
+                                        <div className="space-y-3">
+                                            {category.skills.map((skill, sIdx) => (
+                                                <div
+                                                    key={sIdx}
+                                                    className="p-2.5 rounded-xl bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 flex flex-col gap-1.5 hover:border-cyan-500/30 transition-colors"
+                                                >
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="font-semibold text-xs text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                                                            {skill.name}
+                                                        </span>
+                                                        <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                                                            {skill.level}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {skill.tags.map((tag, tIdx) => (
+                                                            <span
+                                                                key={tIdx}
+                                                                className="text-[10px] text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded bg-white/60 dark:bg-slate-800/60"
+                                                            >
+                                                                {tag}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
+                    </AnimatePresence>
+                </motion.div>
+
             </div>
         </section>
     );
 };
-
-const SkillCard = ({ title, icon: Icon, className, iconColor, items, delay }: SkillCardProps) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay }}
-            className={`bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-slate-200 dark:border-slate-700/30 rounded-3xl p-8 hover:bg-white/80 dark:hover:bg-slate-800/40 transition-colors shadow-sm`}
-        >
-            <div className="flex items-center gap-4 mb-8">
-                <div className={`p-3 rounded-xl bg-gradient-to-br ${className}`}>
-                    <Icon className={`w-6 h-6 ${iconColor}`} />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">{title}</h3>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-                {items.map((skill: SkillItem, idx: number) => (
-                    <div
-                        key={idx}
-                        className="group relative px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 transition-colors cursor-default overflow-hidden"
-                    >
-                        <div className={`absolute inset-0 bg-gradient-to-r ${className} opacity-0 group-hover:opacity-100 transition-opacity`} />
-                        <span className="relative z-10 text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white text-sm font-medium">{skill.name}</span>
-                    </div>
-                ))}
-            </div>
-        </motion.div>
-    );
-}

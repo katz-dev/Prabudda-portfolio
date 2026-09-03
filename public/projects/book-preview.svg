@@ -1,0 +1,60 @@
+<svg width="800" height="480" viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#080F1D"/>
+      <stop offset="1" stop-color="#111C30"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" rx="16" fill="url(#bg)"/>
+
+  <!-- Bookstore Header -->
+  <rect x="40" y="30" width="720" height="48" rx="8" fill="#132338" stroke="#1E385C"/>
+  <rect x="56" y="44" width="20" height="20" rx="4" fill="#8B5CF6"/>
+  <text x="86" y="58" fill="#F8FAFC" font-family="sans-serif" font-size="14" font-weight="bold">BOOK BOULEVARD</text>
+  <text x="240" y="58" fill="#64748B" font-family="sans-serif" font-size="12">| Literary Discovery &amp; Publishing Portal</text>
+  <rect x="580" y="42" width="164" height="24" rx="12" fill="#8B5CF6" fill-opacity="0.2" stroke="#8B5CF6" stroke-width="0.5"/>
+  <text x="596" y="58" fill="#C4B5FD" font-family="monospace" font-size="11" font-weight="bold">MERN STACK PLATFORM</text>
+
+  <!-- Left Sidebar / Genres -->
+  <rect x="40" y="96" width="180" height="344" rx="10" fill="#0C1726" stroke="#1E385C"/>
+  <text x="56" y="126" fill="#A78BFA" font-family="sans-serif" font-size="12" font-weight="bold">EXPLORE GENRES</text>
+  
+  <rect x="52" y="142" width="156" height="32" rx="6" fill="#8B5CF6" fill-opacity="0.15" stroke="#8B5CF6" stroke-width="0.5"/>
+  <text x="64" y="162" fill="#DDD6FE" font-family="sans-serif" font-size="11" font-weight="600">📚 All Literature</text>
+  <rect x="52" y="180" width="156" height="32" rx="6" fill="#132338"/>
+  <text x="64" y="200" fill="#94A3B8" font-family="sans-serif" font-size="11">🔒 Cyber &amp; Tech</text>
+  <rect x="52" y="218" width="156" height="32" rx="6" fill="#132338"/>
+  <text x="64" y="238" fill="#94A3B8" font-family="sans-serif" font-size="11">🚀 Sci-Fi &amp; Fantasy</text>
+  <rect x="52" y="256" width="156" height="32" rx="6" fill="#132338"/>
+  <text x="64" y="276" fill="#94A3B8" font-family="sans-serif" font-size="11">✍️ Author Portal</text>
+
+  <!-- Middle Book Cards -->
+  <rect x="240" y="96" width="240" height="210" rx="8" fill="#101F33" stroke="#1E385C"/>
+  <rect x="256" y="112" width="60" height="85" rx="4" fill="#3B82F6"/>
+  <text x="264" y="155" fill="#FFFFFF" font-family="sans-serif" font-size="18" font-weight="bold">IT</text>
+  <text x="328" y="130" fill="#F8FAFC" font-family="sans-serif" font-size="13" font-weight="bold">Zero Trust Defense</text>
+  <text x="328" y="148" fill="#64748B" font-family="sans-serif" font-size="11">Security Blueprint</text>
+  <text x="328" y="174" fill="#F59E0B" font-family="sans-serif" font-size="11">★★★★★ (4.9)</text>
+  <text x="256" y="235" fill="#94A3B8" font-family="sans-serif" font-size="11">Instant chapter reader and indexed community discussion.</text>
+  <rect x="256" y="260" width="208" height="28" rx="6" fill="#8B5CF6"/>
+  <text x="325" y="278" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">Read Preview</text>
+
+  <rect x="500" y="96" width="260" height="210" rx="8" fill="#101F33" stroke="#1E385C"/>
+  <rect x="516" y="112" width="60" height="85" rx="4" fill="#10B981"/>
+  <text x="524" y="155" fill="#FFFFFF" font-family="sans-serif" font-size="18" font-weight="bold">DB</text>
+  <text x="588" y="130" fill="#F8FAFC" font-family="sans-serif" font-size="13" font-weight="bold">Data Systems &amp; SQL</text>
+  <text x="588" y="148" fill="#64748B" font-family="sans-serif" font-size="11">High Volume Schemas</text>
+  <text x="588" y="174" fill="#F59E0B" font-family="sans-serif" font-size="11">★★★★★ (4.8)</text>
+  <text x="516" y="235" fill="#94A3B8" font-family="sans-serif" font-size="11">Full MongoDB compound indexing and author licensing.</text>
+  <rect x="516" y="260" width="228" height="28" rx="6" fill="#8B5CF6"/>
+  <text x="590" y="278" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">Read Preview</text>
+
+  <!-- Bottom: Platform Architecture -->
+  <rect x="240" y="320" width="520" height="120" rx="10" fill="#0C1726" stroke="#1E385C"/>
+  <text x="260" y="344" fill="#A78BFA" font-family="monospace" font-size="11" font-weight="bold">ARCHITECTURE: REACT + NODE.JS + EXPRESS + MONGODB</text>
+  <rect x="260" y="356" width="480" height="32" rx="4" fill="#132338"/>
+  <text x="274" y="376" fill="#CBD5E1" font-family="sans-serif" font-size="11">• MongoDB Text Index Search delivering instant filter results across full book corpus</text>
+  <rect x="260" y="394" width="480" height="32" rx="4" fill="#132338"/>
+  <text x="274" y="414" fill="#CBD5E1" font-family="sans-serif" font-size="11">• JWT Token Authentication with granular author publishing permissions &amp; review moderation</text>
+</svg>

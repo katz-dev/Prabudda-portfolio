@@ -1,0 +1,89 @@
+<svg width="800" height="480" viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07111F"/>
+      <stop offset="1" stop-color="#0E1B2E"/>
+    </linearGradient>
+    <linearGradient id="cyan-glow" x1="0" y1="0" x2="300" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#2563EB" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="card-grad" x1="0" y1="0" x2="0" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E293B" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#0F172A" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" rx="16" fill="url(#bg)"/>
+  
+  <!-- Subtle Grid Pattern -->
+  <g opacity="0.1" stroke="#38BDF8" stroke-width="0.75">
+    <path d="M0 40H800M0 80H800M0 120H800M0 160H800M0 200H800M0 240H800M0 280H800M0 320H800M0 360H800M0 400H800M0 440H800"/>
+    <path d="M40 0V480M80 0V480M120 0V480M160 0V480M200 0V480M240 0V480M280 0V480M320 0V480M360 0V480M400 0V480M440 0V480M480 0V480M520 0V480M560 0V480M600 0V480M640 0V480M680 0V480M720 0V480M760 0V480"/>
+  </g>
+
+  <circle cx="700" cy="80" r="140" fill="url(#cyan-glow)"/>
+
+  <!-- Top App Bar -->
+  <rect x="40" y="30" width="720" height="40" rx="8" fill="#111E33" stroke="#1E293B"/>
+  <circle cx="62" cy="50" r="5" fill="#EF4444"/>
+  <circle cx="78" cy="50" r="5" fill="#F59E0B"/>
+  <circle cx="94" cy="50" r="5" fill="#10B981"/>
+  <rect x="120" y="40" width="280" height="20" rx="4" fill="#0A1322"/>
+  <text x="132" y="54" fill="#64748B" font-family="monospace" font-size="11">https://xfaction.store/marketplace</text>
+  <rect x="620" y="38" width="120" height="24" rx="12" fill="#2563EB" fill-opacity="0.2" stroke="#2563EB" stroke-width="0.5"/>
+  <text x="635" y="54" fill="#60A5FA" font-family="sans-serif" font-size="10" font-weight="600">Discord OAuth2</text>
+
+  <!-- Left Sidebar / Category List -->
+  <rect x="40" y="90" width="180" height="350" rx="8" fill="#0C1726" stroke="#1E293B"/>
+  <text x="56" y="120" fill="#94A3B8" font-family="sans-serif" font-size="12" font-weight="600">FIVEM ASSETS</text>
+  <rect x="52" y="135" width="156" height="32" rx="6" fill="#2563EB" fill-opacity="0.15" stroke="#2563EB" stroke-width="0.75"/>
+  <text x="64" y="156" fill="#38BDF8" font-family="sans-serif" font-size="11" font-weight="600">⚡ Custom Vehicles</text>
+  <rect x="52" y="175" width="156" height="32" rx="6" fill="#111E33"/>
+  <text x="64" y="196" fill="#94A3B8" font-family="sans-serif" font-size="11">🏢 MLO Interiors</text>
+  <rect x="52" y="215" width="156" height="32" rx="6" fill="#111E33"/>
+  <text x="64" y="236" fill="#94A3B8" font-family="sans-serif" font-size="11">📜 QB-Core Scripts</text>
+  <rect x="52" y="255" width="156" height="32" rx="6" fill="#111E33"/>
+  <text x="64" y="276" fill="#94A3B8" font-family="sans-serif" font-size="11">🛡️ VIP Packages</text>
+
+  <!-- Architecture Badges on Sidebar -->
+  <rect x="52" y="340" width="156" height="80" rx="6" fill="#111E33" stroke="#1E293B"/>
+  <text x="62" y="360" fill="#06B6D4" font-family="monospace" font-size="10" font-weight="bold">STACK / INTEGRATION</text>
+  <text x="62" y="380" fill="#94A3B8" font-family="sans-serif" font-size="10">• Tebex Headless API</text>
+  <text x="62" y="396" fill="#94A3B8" font-family="sans-serif" font-size="10">• Next.js Server Actions</text>
+  <text x="62" y="412" fill="#94A3B8" font-family="sans-serif" font-size="10">• PayPal Automated</text>
+
+  <!-- Main Storefront Content Grid -->
+  <!-- Card 1 -->
+  <rect x="240" y="90" width="240" height="210" rx="8" fill="url(#card-grad)" stroke="#1E293B"/>
+  <rect x="252" y="102" width="216" height="100" rx="6" fill="#091424"/>
+  <path d="M280 160L330 130L410 130L440 160H280Z" fill="#2563EB" fill-opacity="0.3" stroke="#38BDF8" stroke-width="1.5"/>
+  <circle cx="310" cy="165" r="10" fill="#06B6D4" fill-opacity="0.5"/>
+  <circle cx="410" cy="165" r="10" fill="#06B6D4" fill-opacity="0.5"/>
+  <text x="252" y="222" fill="#F8FAFC" font-family="sans-serif" font-size="13" font-weight="bold">Custom Supercar Pack v2</text>
+  <text x="252" y="240" fill="#64748B" font-family="sans-serif" font-size="11">Optimized Poly &amp; Handling</text>
+  <text x="252" y="278" fill="#10B981" font-family="sans-serif" font-size="14" font-weight="bold">$24.99</text>
+  <rect x="360" y="260" width="108" height="28" rx="6" fill="#2563EB"/>
+  <text x="382" y="278" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">Buy Now</text>
+
+  <!-- Card 2 -->
+  <rect x="500" y="90" width="260" height="210" rx="8" fill="url(#card-grad)" stroke="#1E293B"/>
+  <rect x="512" y="102" width="236" height="100" rx="6" fill="#091424"/>
+  <rect x="540" y="125" width="180" height="55" rx="4" fill="#0F172A" stroke="#06B6D4" stroke-width="0.5"/>
+  <text x="555" y="155" fill="#38BDF8" font-family="monospace" font-size="11">[QB-CORE] Advanced Police</text>
+  <text x="512" y="222" fill="#F8FAFC" font-family="sans-serif" font-size="13" font-weight="bold">Police CAD &amp; MDT System</text>
+  <text x="512" y="240" fill="#64748B" font-family="sans-serif" font-size="11">Live GPS &amp; Warrant DB</text>
+  <text x="512" y="278" fill="#10B981" font-family="sans-serif" font-size="14" font-weight="bold">$39.99</text>
+  <rect x="640" y="260" width="108" height="28" rx="6" fill="#2563EB"/>
+  <text x="662" y="278" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">Buy Now</text>
+
+  <!-- Live Payment Notification Stream -->
+  <rect x="240" y="320" width="520" height="120" rx="8" fill="#0C1726" stroke="#1E293B"/>
+  <text x="256" y="344" fill="#38BDF8" font-family="monospace" font-size="11" font-weight="bold">REAL-TIME WEBHOOK &amp; DOKPLOY STATUS</text>
+  <rect x="256" y="356" width="488" height="32" rx="4" fill="#111E33"/>
+  <circle cx="272" cy="372" r="4" fill="#10B981"/>
+  <text x="286" y="376" fill="#CBD5E1" font-family="sans-serif" font-size="11">Tebex Order #9284 confirmed via PayPal -> Discord Role Assigned -> In-game auto-delivered</text>
+  <rect x="256" y="394" width="488" height="32" rx="4" fill="#111E33"/>
+  <circle cx="272" cy="410" r="4" fill="#38BDF8"/>
+  <text x="286" y="414" fill="#CBD5E1" font-family="sans-serif" font-size="11">Cloudflare Edge: SSL A+ | Dokploy Production: 100% Healthy | Server Actions: 28ms</text>
+</svg>
