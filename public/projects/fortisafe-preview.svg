@@ -1,0 +1,95 @@
+<svg width="800" height="480" viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#050C17"/>
+      <stop offset="1" stop-color="#0A182E"/>
+    </linearGradient>
+    <linearGradient id="shield-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" rx="16" fill="url(#bg)"/>
+
+  <!-- Radar / Security Grid -->
+  <g opacity="0.12" stroke="#06B6D4" stroke-width="0.75">
+    <circle cx="400" cy="240" r="80" stroke-dasharray="4 4"/>
+    <circle cx="400" cy="240" r="160"/>
+    <circle cx="400" cy="240" r="240" stroke-dasharray="6 6"/>
+    <path d="M400 0V480M0 240H800"/>
+  </g>
+
+  <!-- Top Security Bar -->
+  <rect x="40" y="30" width="720" height="44" rx="8" fill="#0D1B2A" stroke="#1E293B"/>
+  <rect x="56" y="44" width="16" height="16" rx="4" fill="#06B6D4"/>
+  <text x="82" y="56" fill="#F8FAFC" font-family="sans-serif" font-size="13" font-weight="bold">FORTISAFE</text>
+  <text x="160" y="56" fill="#64748B" font-family="sans-serif" font-size="11">| Zero-Knowledge Cryptographic Vault</text>
+  <rect x="580" y="40" width="164" height="24" rx="12" fill="#10B981" fill-opacity="0.15" stroke="#10B981" stroke-width="0.5"/>
+  <circle cx="595" cy="52" r="4" fill="#10B981"/>
+  <text x="606" y="56" fill="#34D399" font-family="monospace" font-size="10" font-weight="bold">ENCRYPTION: AES-256</text>
+
+  <!-- Left Column: Browser Extension Simulation -->
+  <rect x="40" y="94" width="220" height="346" rx="10" fill="#0B1522" stroke="#1E293B"/>
+  <rect x="56" y="110" width="188" height="32" rx="6" fill="#16263B"/>
+  <text x="68" y="130" fill="#06B6D4" font-family="monospace" font-size="11" font-weight="bold">BROWSER EXTENSION</text>
+  <rect x="56" y="154" width="188" height="60" rx="6" fill="#07101A" stroke="#1E293B"/>
+  <text x="68" y="176" fill="#94A3B8" font-family="sans-serif" font-size="11">Active Domain Check</text>
+  <text x="68" y="196" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="600">✓ Verified Authentic</text>
+
+  <rect x="56" y="226" width="188" height="100" rx="6" fill="#07101A" stroke="#1E293B"/>
+  <text x="68" y="248" fill="#94A3B8" font-family="sans-serif" font-size="11">Autofill Credentials</text>
+  <rect x="68" y="260" width="164" height="24" rx="4" fill="#16263B"/>
+  <text x="76" y="276" fill="#E2E8F0" font-family="monospace" font-size="10">••••••••••••••••</text>
+  <rect x="68" y="290" width="164" height="24" rx="4" fill="#06B6D4"/>
+  <text x="110" y="306" fill="#07101A" font-family="sans-serif" font-size="11" font-weight="bold">Unlock Vault</text>
+
+  <rect x="56" y="340" width="188" height="80" rx="6" fill="#07101A"/>
+  <text x="68" y="360" fill="#64748B" font-family="sans-serif" font-size="10">SECURITY SCORE</text>
+  <text x="68" y="394" fill="#10B981" font-family="sans-serif" font-size="28" font-weight="bold">98/100</text>
+  <text x="148" y="388" fill="#94A3B8" font-family="sans-serif" font-size="10">0 Weak PW<br/>0 Breached</text>
+
+  <!-- Center & Right: Dashboard & Architecture Layers -->
+  <rect x="280" y="94" width="480" height="210" rx="10" fill="#0B1522" stroke="#1E293B"/>
+  <text x="304" y="126" fill="#F8FAFC" font-family="sans-serif" font-size="14" font-weight="bold">Enterprise Security Dashboard</text>
+  <text x="304" y="146" fill="#64748B" font-family="sans-serif" font-size="11">Real-time breach monitoring &amp; Argon2id key derivation</text>
+
+  <!-- Metric Badges -->
+  <rect x="304" y="166" width="136" height="64" rx="6" fill="#112236" stroke="#1E293B"/>
+  <text x="316" y="186" fill="#64748B" font-family="sans-serif" font-size="10">VAULT ENTRIES</text>
+  <text x="316" y="214" fill="#38BDF8" font-family="sans-serif" font-size="20" font-weight="bold">1,420</text>
+
+  <rect x="452" y="166" width="136" height="64" rx="6" fill="#112236" stroke="#1E293B"/>
+  <text x="464" y="186" fill="#64748B" font-family="sans-serif" font-size="10">BREACH MONITOR</text>
+  <text x="464" y="214" fill="#10B981" font-family="sans-serif" font-size="20" font-weight="bold">PROTECTED</text>
+
+  <rect x="600" y="166" width="140" height="64" rx="6" fill="#112236" stroke="#1E293B"/>
+  <text x="612" y="186" fill="#64748B" font-family="sans-serif" font-size="10">KEY STRENGTH</text>
+  <text x="612" y="214" fill="#A855F7" font-family="sans-serif" font-size="20" font-weight="bold">256-BIT</text>
+
+  <rect x="304" y="244" width="436" height="42" rx="6" fill="#0A111C"/>
+  <text x="316" y="270" fill="#06B6D4" font-family="monospace" font-size="11">Backend API: NestJS Modular Architecture · MongoDB Sharded Indexes</text>
+
+  <!-- Bottom Architecture Diagram -->
+  <rect x="280" y="320" width="480" height="120" rx="10" fill="#0B1522" stroke="#1E293B"/>
+  <text x="304" y="344" fill="#38BDF8" font-family="monospace" font-size="11" font-weight="bold">THREE-TIER ZERO-KNOWLEDGE SECURITY PIPELINE</text>
+  
+  <rect x="304" y="360" width="128" height="60" rx="6" fill="#16263B"/>
+  <text x="316" y="380" fill="#F8FAFC" font-family="sans-serif" font-size="11" font-weight="bold">Client Browser</text>
+  <text x="316" y="398" fill="#06B6D4" font-family="monospace" font-size="9">AES-256-GCM Encrypt</text>
+  <text x="316" y="410" fill="#64748B" font-family="sans-serif" font-size="9">Keys never leave device</text>
+
+  <path d="M436 390H454" stroke="#06B6D4" stroke-width="2"/>
+
+  <rect x="458" y="360" width="136" height="60" rx="6" fill="#16263B"/>
+  <text x="470" y="380" fill="#F8FAFC" font-family="sans-serif" font-size="11" font-weight="bold">Hardened NestJS</text>
+  <text x="470" y="398" fill="#38BDF8" font-family="monospace" font-size="9">Argon2id + JWT Guard</text>
+  <text x="470" y="410" fill="#64748B" font-family="sans-serif" font-size="9">Rate limited REST APIs</text>
+
+  <path d="M598 390H616" stroke="#06B6D4" stroke-width="2"/>
+
+  <rect x="620" y="360" width="124" height="60" rx="6" fill="#16263B"/>
+  <text x="632" y="380" fill="#F8FAFC" font-family="sans-serif" font-size="11" font-weight="bold">MongoDB Vault</text>
+  <text x="632" y="398" fill="#10B981" font-family="monospace" font-size="9">Encrypted Blobs</text>
+  <text x="632" y="410" fill="#64748B" font-family="sans-serif" font-size="9">Zero-Knowledge State</text>
+</svg>
