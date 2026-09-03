@@ -13,6 +13,7 @@ import {
     Star,
     Briefcase
 } from "lucide-react";
+import { TechLogo } from "@/components/TechLogo";
 
 export const Projects = () => {
     const [filter, setFilter] = useState<string>("all");
@@ -141,9 +142,10 @@ export const Projects = () => {
                                                 {project.technologies.map((tech, tIdx) => (
                                                     <span
                                                         key={tIdx}
-                                                        className="px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-100 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800"
+                                                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-100 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800"
                                                     >
-                                                        {tech}
+                                                        <TechLogo name={tech} size={13} />
+                                                        <span>{tech}</span>
                                                     </span>
                                                 ))}
                                             </div>

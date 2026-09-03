@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { skillsData } from "@/data/portfolio";
 import { Cpu } from "lucide-react";
+import { TechLogo } from "@/components/TechLogo";
 
 export const Skills = () => {
     const [activeTab, setActiveTab] = useState<string>("all");
@@ -113,9 +114,11 @@ export const Skills = () => {
                                                     className="p-2.5 rounded-xl bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 flex flex-col gap-1.5 hover:border-cyan-500/30 transition-colors"
                                                 >
                                                     <div className="flex items-center justify-between">
-                                                        <span className="font-semibold text-xs text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                                                            {skill.name}
+                                                        <span className="font-semibold text-xs text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                                                            <div className="w-6 h-6 rounded-lg bg-white dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/60 flex items-center justify-center p-0.5 shadow-sm shrink-0">
+                                                                <TechLogo name={skill.name} size={15} />
+                                                            </div>
+                                                            <span>{skill.name}</span>
                                                         </span>
                                                         <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
                                                             {skill.level}
